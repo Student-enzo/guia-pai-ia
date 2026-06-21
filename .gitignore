@@ -3,3 +3,7 @@ node_modules/
 .env*.local
 .DS_Store
 *.tsbuildinfo
+
+# claude-flow / ruflo session data
+.claude-flow/
+.swarm/
