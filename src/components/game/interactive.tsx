@@ -616,3 +616,305 @@ export function Transforma({ step, onResponder, locked }: { step: Extract<Step, 
     </div>
   );
 }
+
+// ════════════════ CHAT (Conversa Viva) ════════════════
+export function ChatVivo({ step, onAdvance }: { step: Extract<Step, { kind: "chat" }>; onAdvance: () => void }) {
+  const [visiveis, setVisiveis] = useState(0); // quantos turnos já apareceram
+  const [digitando, setDigitando] = useState(false);
+  const fimRef = useRef<HTMLDivElement>(null);
+
+  const proximo = step.turnos[visiveis];
+  const acabou = visiveis >= step.turnos.length;
+
+  useEffect(() => {
+    fimRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [visiveis, digitando]);
+
+  const avancar = () => {
+    if (!proximo || digitando) return;
+    if (proximo.de === "voce") {
+      setVisiveis((v) => v + 1);
+    } else {
+      // a IA "pensa" e depois digita
+      setDigitando(true);
+      setTimeout(() => {
+        setDigitando(false);
+        setVisiveis((v) => v + 1);
+      }, 600);
+    }
+  };
+
+  const ultimoIA = step.turnos[visiveis - 1]?.de === "ia";
+
+  return (
+    <div>
+      <h3 style={tituloStyle}>{step.titulo ?? "Conversa viva"}</h3>
+      <p style={subStyle}>{step.instrucao}</p>
+      <Telinha>
+        {visiveis === 0 && !digitando && (
+          <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: 14, color: C.textMuted, textAlign: "center", padding: "16px 0", fontWeight: 600 }}>
+            👇 Toque pra começar a conversa
+          </p>
+        )}
+        {step.turnos.slice(0, visiveis).map((t, k) =>
+          t.de === "voce" ? (
+            <Bolha key={k} from="eu">{t.texto}</Bolha>
+          ) : (
+            <RespostaIA key={k} texto={t.texto} ativa={k === visiveis - 1 && ultimoIA} />
+          )
+        )}
+        {digitando && (
+          <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
+            <div style={{ width: 30, height: 30, borderRadius: "50%", background: C.seaLight, border: `2px solid ${C.sea}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>🦜</div>
+            <div style={{ background: C.card2, border: `1px solid ${C.line}`, borderRadius: 18, borderBottomLeftRadius: 4, padding: "12px 16px" }}><Pensando /></div>
+          </div>
+        )}
+        <div ref={fimRef} />
+      </Telinha>
+
+      <div style={{ marginTop: 16 }}>
+        {!acabou ? (
+          <ChunkyButton full cor={C.sea} disabled={digitando} onClick={avancar}>
+            {proximo?.de === "voce" ? "✍️ Enviar minha mensagem" : "👀 Ver a IA responder"}
+          </ChunkyButton>
+        ) : (
+          <>
+            <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: 15, fontWeight: 700, color: C.green, textAlign: "center", margin: "0 0 12px" }}>{step.sucesso}</p>
+            <ChunkyButton full cor={C.green} onClick={onAdvance}>Continuar →</ChunkyButton>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ════════════════ MEDIDOR (Medidor de Contexto) ════════════════
+export function Medidor({ step, onAdvance }: { step: Extract<Step, { kind: "medidor" }>; onAdvance: () => void }) {
+  const [ativos, setAtivos] = useState<Set<number>>(new Set());
+  const total = step.chips.length;
+  const pct = total === 0 ? 0 : Math.round((ativos.size / total) * 100);
+  const cheio = ativos.size === total;
+  const { shown, done } = useTyped(cheio ? step.respostaForte : step.respostaFraca, true, 14);
+
+  const toggle = (i: number) =>
+    setAtivos((s) => {
+      const n = new Set(s);
+      if (n.has(i)) n.delete(i);
+      else n.add(i);
+      return n;
+    });
+
+  // cor do medidor: vermelho → amarelo → verde
+  const cor = pct < 40 ? C.coral : pct < 100 ? C.brass : C.green;
+  const cara = pct < 40 ? "😐" : pct < 100 ? "🙂" : "🤩";
+
+  return (
+    <div>
+      <h3 style={tituloStyle}>{step.titulo ?? "Medidor de Contexto"}</h3>
+      <p style={subStyle}>{step.instrucao}</p>
+
+      {/* medidor animado */}
+      <div style={{ background: C.card2, border: `1px solid ${C.line}`, borderRadius: 16, padding: "16px 16px 14px", marginBottom: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <span style={{ fontFamily: "'Nunito',sans-serif", fontWeight: 800, fontSize: 13, color: C.textMuted }}>FORÇA DO CONTEXTO</span>
+          <span style={{ fontSize: 24 }}>{cara}</span>
+        </div>
+        <div style={{ height: 18, borderRadius: 999, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+          <motion.div animate={{ width: `${pct}%`, background: cor }} transition={{ type: "spring", stiffness: 120, damping: 18 }}
+            style={{ height: "100%", borderRadius: 999 }} />
+        </div>
+        <div style={{ textAlign: "right", marginTop: 5, fontFamily: "'Nunito',sans-serif", fontWeight: 800, fontSize: 13, color: cor }}>
+          {pct < 40 ? "FRACO" : pct < 100 ? "ESQUENTANDO" : "FORTE! ✨"}
+        </div>
+      </div>
+
+      {/* chips de contexto */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+        {step.chips.map((c, i) => {
+          const on = ativos.has(i);
+          return (
+            <button key={i} onClick={() => toggle(i)} className="clay"
+              style={{ background: on ? C.green : C.card2, color: on ? "#0A0B0D" : C.text, border: `2px solid ${on ? "transparent" : C.line}`, padding: "9px 14px", fontSize: 14, fontWeight: 700, borderRadius: 999 }}>
+              {on ? "✓ " : "+ "}{c}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* resposta da IA que se transforma */}
+      <Telinha>
+        <Bolha from="ia">
+          {shown}{!done && <span style={{ opacity: 0.5 }}>▍</span>}
+        </Bolha>
+      </Telinha>
+
+      <div style={{ marginTop: 16 }}>
+        <ChunkyButton full cor={cheio ? C.green : C.card2} textColor={cheio ? "#0A0B0D" : C.textMuted} disabled={!cheio} onClick={onAdvance}>
+          {cheio ? step.sucesso : "Adicione todo o contexto pra encher o medidor"}
+        </ChunkyButton>
+      </div>
+    </div>
+  );
+}
+
+// ════════════════ BOSS (O Cliente Difícil) ════════════════
+export function Boss({ step, onAdvance }: { step: Extract<Step, { kind: "boss" }>; onAdvance: () => void }) {
+  const [usados, setUsados] = useState<Set<number>>(new Set());
+  const [tremor, setTremor] = useState(false);
+  const bons = step.ingredientes.filter((g) => g.bom).length;
+  const bonsUsados = step.ingredientes.filter((g, i) => g.bom && usados.has(i)).length;
+  const venceu = bonsUsados === bons;
+  const irritacao = Math.max(0, bons - bonsUsados); // corações de irritação restantes
+
+  const cara = venceu ? "😄" : irritacao >= bons ? "😡" : irritacao === 0 ? "😄" : irritacao <= Math.ceil(bons / 2) ? "🙂" : "😠";
+
+  const escolher = (i: number) => {
+    if (usados.has(i) || venceu) return;
+    const ing = step.ingredientes[i];
+    if (ing.bom) {
+      setUsados((u) => new Set(u).add(i));
+    } else {
+      // armadilha: treme e dá um feedback, mas não progride
+      setTremor(true);
+      setTimeout(() => setTremor(false), 450);
+    }
+  };
+
+  return (
+    <div>
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(248,113,113,0.12)", border: `1px solid rgba(248,113,113,0.35)`, borderRadius: 999, padding: "5px 12px", marginBottom: 12 }}>
+        <span style={{ width: 7, height: 7, borderRadius: "50%", background: C.coral }} />
+        <span className="label-caps" style={{ color: C.coral }}>Boss Battle</span>
+      </div>
+      <h3 style={tituloStyle}>{step.titulo ?? "O Cliente Difícil"}</h3>
+
+      {/* o boss */}
+      <motion.div animate={tremor ? { x: [0, -8, 8, -5, 0] } : {}} transition={{ duration: 0.4 }}
+        style={{ background: C.card2, border: `1px solid ${venceu ? C.green + "66" : "rgba(248,113,113,0.3)"}`, borderRadius: 16, padding: "16px 16px", marginBottom: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+          <motion.span animate={{ scale: venceu ? [1, 1.3, 1] : 1 }} style={{ fontSize: 40 }}>{cara}</motion.span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Nunito',sans-serif", fontWeight: 800, fontSize: 15, color: C.text }}>{step.cliente}</div>
+            {/* barra de irritação (corações) */}
+            <div style={{ display: "flex", gap: 4, marginTop: 4 }}>
+              {Array.from({ length: bons }).map((_, k) => (
+                <motion.span key={k} animate={{ scale: k >= irritacao ? [1, 1.4, 0] : 1, opacity: k >= irritacao ? 0.25 : 1 }}
+                  style={{ fontSize: 15 }}>{k >= irritacao ? "🤍" : "❤️"}</motion.span>
+              ))}
+            </div>
+          </div>
+        </div>
+        <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: 15, color: venceu ? C.text : C.textMuted, fontStyle: "italic", lineHeight: 1.5, margin: 0 }}>
+          {venceu ? `🦜 "${step.respostaVitoria}"` : `"${step.reclamacao}"`}
+        </p>
+      </motion.div>
+
+      {!venceu ? (
+        <>
+          <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: 14, fontWeight: 700, color: C.textMuted, marginBottom: 10 }}>
+            Monte a resposta certa pra acalmar ele (cuidado com as armadilhas):
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
+            {step.ingredientes.map((g, i) => {
+              const on = usados.has(i);
+              return (
+                <button key={i} onClick={() => escolher(i)} disabled={on} className="clay"
+                  style={{ background: on ? C.green : C.card2, color: on ? "#0A0B0D" : C.text, border: `2px solid ${on ? "transparent" : C.line}`, padding: "11px 15px", fontSize: 14.5, fontWeight: 700, opacity: on ? 0.85 : 1 }}>
+                  {on ? "✓ " : ""}{g.etiqueta}
+                </button>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <div style={{ marginTop: 4 }}>
+          <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: 16, fontWeight: 800, color: C.green, textAlign: "center", margin: "0 0 12px" }}>
+            🏆 Boss derrotado! {step.sucesso}
+          </p>
+          <ChunkyButton full cor={C.green} onClick={onAdvance}>Próxima ilha →</ChunkyButton>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ════════════════ CORRIDA (Corrida do Swarm) ════════════════
+export function Corrida({ step, onAdvance }: { step: Extract<Step, { kind: "corrida" }>; onAdvance: () => void }) {
+  const [correndo, setCorrendo] = useState(false);
+  const [soloProg, setSoloProg] = useState(0); // 0..n (tarefas concluídas em fila)
+  const [swarmDone, setSwarmDone] = useState(false);
+  const [acabou, setAcabou] = useState(false);
+  const n = step.tarefas.length;
+
+  const largar = () => {
+    if (correndo) return;
+    setCorrendo(true);
+    setSoloProg(0);
+    setSwarmDone(false);
+    setAcabou(false);
+    // swarm: todos em paralelo, termina rápido
+    setTimeout(() => setSwarmDone(true), 1400);
+    // solo: uma tarefa de cada vez, devagar
+    let i = 0;
+    const id = setInterval(() => {
+      i += 1;
+      setSoloProg(i);
+      if (i >= n) {
+        clearInterval(id);
+        setAcabou(true);
+      }
+    }, 900);
+  };
+
+  return (
+    <div>
+      <h3 style={tituloStyle}>🏁 Corrida do Swarm</h3>
+      <p style={subStyle}>{step.instrucao}</p>
+
+      {/* pista do solo */}
+      <Pista titulo="1 barco sozinho (em fila)" cor={C.coral}>
+        <motion.span animate={{ x: `${(soloProg / n) * 88}%` }} transition={{ type: "spring", stiffness: 90, damping: 16 }} style={{ fontSize: 26, position: "absolute" }}>🚤</motion.span>
+        <span style={{ position: "absolute", right: 0, fontSize: 20 }}>🏁</span>
+      </Pista>
+      <p style={{ fontFamily: "ui-monospace,Menlo,monospace", fontSize: 12, color: C.textMuted, margin: "4px 0 14px" }}>
+        {correndo ? `Fazendo ${soloProg}/${n}: ${step.tarefas[Math.min(soloProg, n - 1)]}` : "esperando largada..."}
+      </p>
+
+      {/* pista do swarm */}
+      <Pista titulo={`Swarm: ${n} barcos ao mesmo tempo`} cor={C.green}>
+        {step.tarefas.map((_, k) => (
+          <motion.span key={k} animate={{ x: swarmDone ? "88%" : correndo ? "88%" : "0%" }} transition={{ duration: 1.4, ease: "easeInOut" }}
+            style={{ fontSize: 20, position: "absolute", top: 2 + k * 9 }}>⛵</motion.span>
+        ))}
+        <span style={{ position: "absolute", right: 0, fontSize: 20 }}>🏁</span>
+      </Pista>
+      <p style={{ fontFamily: "ui-monospace,Menlo,monospace", fontSize: 12, color: swarmDone ? C.green : C.textMuted, margin: "4px 0 16px" }}>
+        {swarmDone ? "✓ Swarm terminou TUDO de uma vez!" : correndo ? "todos trabalhando juntos..." : "esperando largada..."}
+      </p>
+
+      {!correndo && !acabou && (
+        <ChunkyButton full cor={C.brass} textColor="#0A0B0D" onClick={largar}>▶ Largar a corrida</ChunkyButton>
+      )}
+      {correndo && !acabou && (
+        <ChunkyButton full cor={C.card2} textColor={C.textMuted} disabled onClick={() => {}}>Correndo... 🏎️</ChunkyButton>
+      )}
+      {acabou && (
+        <>
+          <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: 15, fontWeight: 700, color: C.green, textAlign: "center", margin: "0 0 12px" }}>{step.sucesso}</p>
+          <ChunkyButton full cor={C.green} onClick={onAdvance}>Entendi o poder do swarm →</ChunkyButton>
+        </>
+      )}
+    </div>
+  );
+}
+
+function Pista({ titulo, cor, children }: { titulo: string; cor: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <span style={{ fontFamily: "'Nunito',sans-serif", fontWeight: 800, fontSize: 12.5, color: cor }}>{titulo}</span>
+      <div style={{ position: "relative", height: 40, background: C.card2, border: `1px solid ${C.line}`, borderRadius: 12, marginTop: 4, padding: "0 8px", overflow: "hidden", display: "flex", alignItems: "center" }}>
+        {children}
+      </div>
+    </div>
+  );
+}

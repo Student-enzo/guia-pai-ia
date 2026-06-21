@@ -105,6 +105,45 @@ export type Step =
       tarefas: string[]; // cada barco faz uma
       sucesso: string;
     }
+  // CHAT — Conversa Viva: chat imersivo onde a IA "digita" letra por letra.
+  // O pai toca pra enviar cada mensagem e vê a resposta surgir ao vivo.
+  | {
+      kind: "chat";
+      titulo?: string;
+      instrucao: string;
+      turnos: { de: "voce" | "ia"; texto: string }[]; // alternam; ia anima digitando
+      sucesso: string;
+    }
+  // MEDIDOR — Medidor de Contexto: toca chips de contexto, o medidor vai de
+  // VERMELHO a VERDE e a resposta da IA se transforma de genérica pra perfeita ao vivo.
+  | {
+      kind: "medidor";
+      titulo?: string;
+      instrucao: string;
+      chips: string[]; // pedaços de contexto pra adicionar
+      respostaFraca: string; // resposta com pouco contexto
+      respostaForte: string; // resposta com contexto cheio
+      sucesso: string;
+    }
+  // BOSS — Boss Battle "O Cliente Difícil": um cliente bravo tem uma barra de
+  // irritação. O pai monta a resposta com os ingredientes certos e drena a barra até o sorriso.
+  | {
+      kind: "boss";
+      titulo?: string;
+      cliente: string; // nome do "boss", ex: "Cliente Bravo"
+      reclamacao: string; // a mensagem irritada
+      ingredientes: { etiqueta: string; bom: boolean }[]; // bons drenam a irritação, ruins são armadilha
+      respostaVitoria: string; // a resposta montada quando vence
+      sucesso: string;
+    }
+  // CORRIDA — Corrida do Swarm: um barco sozinho (tarefas em fila, devagar) corre
+  // contra uma frota em paralelo (rápida). O pai larga a corrida e vê o swarm ganhar.
+  | {
+      kind: "corrida";
+      instrucao: string;
+      tarefas: string[]; // as tarefas que ambos precisam fazer
+      sucesso: string;
+    }
   // TRANSFORMA — "conserta o pedido": liga ingredientes e vê o pedido fraco virar forte ao vivo,
   // com a resposta da IA mudando. Mecânica nova: toggles aditivos + medidor + antes/depois.
   | {
@@ -124,6 +163,23 @@ export type Step =
       intro: string;
       passos: string[]; // cada passo é uma ação real (toca pra marcar feito)
       prompt?: string; // prompt pronto pra copiar e colar
+      fechamento: string;
+    }
+  // EXPERIMENTO — "Faça e Conta": missão prática de verdade no app de IA dele.
+  // Ele FAZ a ação, depois toca em "o que aconteceu?" e ganha uma reação/insight.
+  // NÃO é quiz (sem certo/errado) — é laboratório: faça, teste, conte o resultado.
+  | {
+      kind: "experimento";
+      titulo: string;
+      missao: string; // o que ele deve fazer DE VERDADE (1-2 frases diretas)
+      ondeFazer?: string; // ex: "no ChatGPT, Claude ou Gemini"
+      prompt?: string; // prompt pronto pra copiar
+      pergunta?: string; // ex: "E aí, o que a IA fez?"
+      resultados: {
+        rotulo: string; // botão: "Ela me fez várias perguntas"
+        reacao: string; // reação do Loro + o insight do que isso ensina
+        ideal?: boolean; // true = resultado esperado (celebra)
+      }[];
       fechamento: string;
     }
   // BAU — "Baú Misterioso": o pai abre e ganha UM tesouro ALEATÓRIO (prompt bônus).
@@ -173,7 +229,12 @@ const NAO_JOGAVEIS = new Set<StepKind>([
   "simulador",
   "dial",
   "swarm",
+  "chat",
+  "medidor",
+  "boss",
+  "corrida",
   "praticar",
+  "experimento",
   "vocab",
   "bau",
 ]);

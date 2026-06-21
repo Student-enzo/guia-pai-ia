@@ -6,7 +6,7 @@ import { C } from "@/lib/config";
 import { useProgress } from "@/lib/progress";
 import { Step } from "@/lib/game/types";
 import { ChunkyButton, Mascote } from "./atoms";
-import { Simulador, Dial, Construir, Caca, SwarmViz, Transforma } from "./interactive";
+import { Simulador, Dial, Construir, Caca, SwarmViz, Transforma, ChatVivo, Medidor, Boss, Corrida } from "./interactive";
 import { CopyButton } from "@/lib/ui";
 
 type RespFn = (ok: boolean, comentario: string) => void;
@@ -49,10 +49,20 @@ export function StepView({
       return <Caca step={step} onResponder={onResponder} locked={locked} />;
     case "swarm":
       return <SwarmViz step={step} onAdvance={onAdvance} />;
+    case "chat":
+      return <ChatVivo step={step} onAdvance={onAdvance} />;
+    case "medidor":
+      return <Medidor step={step} onAdvance={onAdvance} />;
+    case "boss":
+      return <Boss step={step} onAdvance={onAdvance} />;
+    case "corrida":
+      return <Corrida step={step} onAdvance={onAdvance} />;
     case "transforma":
       return <Transforma step={step} onResponder={onResponder} locked={locked} />;
     case "praticar":
       return <Praticar step={step} onAdvance={onAdvance} />;
+    case "experimento":
+      return <Experimento step={step} onAdvance={onAdvance} />;
     case "vocab":
       return <Vocab step={step} onAdvance={onAdvance} />;
     case "bau":
@@ -200,6 +210,92 @@ const tituloStyle: React.CSSProperties = {
   lineHeight: 1.25,
   marginBottom: 16,
 };
+
+// ── EXPERIMENTO ("Faça e Conta" — laboratório prático, sem certo/errado) ──
+function Experimento({ step, onAdvance }: { step: Extract<Step, { kind: "experimento" }>; onAdvance: () => void }) {
+  const [fase, setFase] = useState<"missao" | "resultado">("missao");
+  const [escolhido, setEscolhido] = useState<number | null>(null);
+  const sel = escolhido !== null ? step.resultados[escolhido] : null;
+
+  return (
+    <div>
+      {/* selo de laboratório */}
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(144,196,207,0.1)", border: `1px solid rgba(144,196,207,0.3)`, borderRadius: 999, padding: "5px 12px", marginBottom: 12 }}>
+        <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: C.sea }} />
+        <span className="label-caps" style={{ color: C.sea }}>Experimento · mão na massa</span>
+      </div>
+      <h3 style={tituloStyle}>{step.titulo}</h3>
+
+      {/* a missão */}
+      <div style={{ background: C.card2, border: `1px solid ${C.line}`, borderRadius: 14, padding: "16px 16px", marginBottom: 14 }}>
+        <div style={{ display: "flex", gap: 11, alignItems: "flex-start" }}>
+          <span style={{ fontSize: 22, flexShrink: 0 }}>🎯</span>
+          <div>
+            <span className="label-caps" style={{ color: C.brassLight, display: "block", marginBottom: 4 }}>Sua missão{step.ondeFazer ? ` · ${step.ondeFazer}` : ""}</span>
+            <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16, fontWeight: 600, color: C.text, lineHeight: 1.5, margin: 0 }}>{step.missao}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* prompt pra copiar */}
+      {step.prompt && (
+        <div style={{ background: "#08090B", borderRadius: 14, padding: "14px 14px 12px", border: `1px solid ${C.line}`, marginBottom: 18 }}>
+          <span className="label-caps" style={{ color: C.seaDeep }}>Cole isto na IA</span>
+          <pre style={{ color: C.seaLight, fontFamily: "ui-monospace, Menlo, monospace", fontSize: 12.5, lineHeight: 1.55, whiteSpace: "pre-wrap", wordBreak: "break-word", margin: "8px 0 12px" }}>{step.prompt}</pre>
+          <CopyButton text={step.prompt} label="Copiar pra usar" />
+        </div>
+      )}
+
+      {fase === "missao" && (
+        <ChunkyButton full cor={C.sea} onClick={() => setFase("resultado")}>
+          Fiz! Bora contar o que rolou →
+        </ChunkyButton>
+      )}
+
+      {fase === "resultado" && (
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+          <div style={{ display: "flex", gap: 9, alignItems: "center", margin: "4px 0 14px" }}>
+            <span style={{ fontSize: 26 }}>🦜</span>
+            <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16.5, fontWeight: 800, color: C.text, margin: 0 }}>
+              {step.pergunta ?? "E aí, o que a IA fez?"}
+            </p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: sel ? 16 : 22 }}>
+            {step.resultados.map((r, i) => {
+              const ativo = escolhido === i;
+              return (
+                <button key={i} onClick={() => setEscolhido(i)}
+                  className={`clay ${ativo && r.ideal ? "pop" : ""}`}
+                  style={{
+                    textAlign: "left", padding: "14px 16px", fontSize: 15.5, fontWeight: 700,
+                    background: ativo ? (r.ideal ? C.green : C.sea) : C.card2,
+                    color: ativo ? "#0A0B0D" : C.text,
+                    border: `2px solid ${ativo ? "transparent" : C.line}`,
+                  }}>
+                  {r.rotulo}
+                </button>
+              );
+            })}
+          </div>
+
+          {sel && (
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+              style={{ background: sel.ideal ? "rgba(74,222,128,0.1)" : "rgba(144,196,207,0.1)", border: `1px solid ${sel.ideal ? "rgba(74,222,128,0.3)" : "rgba(144,196,207,0.3)"}`, borderRadius: 14, padding: "14px 16px", marginBottom: 20 }}>
+              <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 20, flexShrink: 0 }}>{sel.ideal ? "🎉" : "🦜"}</span>
+                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 14.5, color: C.text, lineHeight: 1.55, margin: 0 }}>{sel.reacao}</p>
+              </div>
+            </motion.div>
+          )}
+
+          <ChunkyButton full cor={sel ? C.green : C.sea} onClick={onAdvance} disabled={!sel}>
+            {sel ? step.fechamento : "Escolhe o que rolou ↑"}
+          </ChunkyButton>
+        </motion.div>
+      )}
+    </div>
+  );
+}
 
 // ── FALA (mascote conta algo) ──
 function Fala({ step, onAdvance }: { step: Extract<Step, { kind: "fala" }>; onAdvance: () => void }) {

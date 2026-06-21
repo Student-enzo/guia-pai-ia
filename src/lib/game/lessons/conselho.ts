@@ -1,126 +1,139 @@
 import { Step } from "../types";
 
-// BÔNUS — O Conselho de Especialistas (nugget de mestre)
+// BONUS - O Conselho de Especialistas (nugget de mestre, mao na massa)
 export const conselho: Step[] = [
   {
     kind: "fala",
     mascote: "pensando",
     titulo: "Nugget de mestre, capitão 🎩",
     texto:
-      "Esse aqui é avançado — guarde pra quando crescer. Tem um segredo sobre a IA que quase ninguém te conta, e ele muda como você toma decisões grandes no negócio.",
+      "Esse aqui é avançado, guarde pra quando crescer. Tem um segredo sobre a IA que quase ninguém te conta, e ele muda como você toma decisões grandes no negócio. Hoje você vai SENTIR ele na pele.",
   },
   {
-    kind: "mito",
-    afirmacao: "A IA sempre te diz a verdade nua e crua sobre as suas decisões.",
-    ehVerdade: false,
-    comentarioCerto:
-      "Isso! Toda IA é treinada pra te agradar. Se você pergunta 'minha ideia é boa?', ela tende a dizer que sim — porque acha que é isso que você quer ouvir.",
-    comentarioErrado:
-      "É MITO! A IA puxa o seu saco, capitão. Ela quer te agradar. Pra decisões grandes, isso é um vazamento no casco — você precisa da verdade, não de elogio.",
+    kind: "experimento",
+    titulo: "Experimento: pegue a IA puxando seu saco",
+    missao: "Abra uma IA e mande uma ideia sua meio duvidosa de propósito, perguntando se é boa. Tipo: 'Quero gastar todo meu caixa em um barco novo agora. Boa ideia, né?'",
+    ondeFazer: "no ChatGPT, Claude ou Gemini",
+    prompt: "Quero gastar todo o meu caixa num barco novo agora, mesmo na baixa temporada. É uma boa ideia, né?",
+    pergunta: "Como a IA reagiu?",
+    resultados: [
+      {
+        rotulo: "Ela meio que concordou comigo",
+        reacao: "PEGOU ela no flagra! Viu como ela puxou seu saco? Você já entregou que queria ouvir 'sim', e ela te deu o 'sim'. Pra decisão grande isso é um vazamento no casco. A solução vem agora.",
+        ideal: true,
+      },
+      {
+        rotulo: "Ela deu uns poréns, mas foi mansa",
+        reacao: "Reparou que ela amaciou? Mesmo com ressalvas, ela tende a te agradar porque você já mostrou pra que lado quer ir. Imagina numa decisão de verdade. Bora consertar isso.",
+        ideal: true,
+      },
+    ],
+    fechamento: "Entendi o problema. Qual a solução? →",
   },
   {
     kind: "fala",
     mascote: "feliz",
-    titulo: "A solução não é um prompt mágico",
+    titulo: "A solução é um CONSELHO",
     texto:
-      "É montar um CONSELHO de especialistas de verdade — uma diretoria que debate entre si e te questiona ANTES de você decidir. Tipo chamar os capitães mais experientes do porto pra discutir a rota antes de zarpar.",
-  },
-  {
-    kind: "escolha",
-    contexto: "Você quer rodar o Conselho pra uma decisão importante.",
-    pergunta: "Qual é o PRIMEIRO movimento certo?",
-    opcoes: [
-      {
-        texto: "Despejar o contexto cru, sem organizar e sem dizer pra que lado você já está pendendo",
-        certa: true,
-        comentario:
-          "Exato! Joga tudo bruto. Se você já entrega sua opinião junto, o conselho contamina a análise antes da hora.",
-      },
-      {
-        texto: "Já dizer qual decisão você acha certa, pra IA confirmar",
-        certa: false,
-        comentario:
-          "Cuidado! Se você revela seu lado, a IA só vai concordar com você. O objetivo é o contrário: deixar ela te questionar primeiro.",
-      },
-      {
-        texto: "Pedir um 'sim ou não' rápido pra economizar tempo",
-        certa: false,
-        comentario:
-          "Pressa afunda barco, capitão. Decisão grande pede o conselho completo — senão você só ouve o eco da sua própria voz.",
-      },
-    ],
-  },
-  {
-    kind: "escolha",
-    contexto: "O conselho vai debater a sua decisão.",
-    pergunta: "Como o conselho TEM que se comportar pra valer a pena?",
-    opcoes: [
-      {
-        texto: "Debater com 'chapéus de pensamento' diferentes e NÃO concordar na hora só pra terminar",
-        certa: true,
-        comentario:
-          "Isso! O atrito é o ouro. Eles precisam discordar, citar trabalho real das pessoas (com links), e te apontar as lacunas que você nem via.",
-      },
-      {
-        texto: "Concordar rápido entre si pra te dar uma resposta única e limpa",
-        certa: false,
-        comentario:
-          "Aí não vale nada! Conselho que concorda na hora é só um espelho. Você quer o debate de verdade, com gente discordando.",
-      },
-    ],
+      "Toda IA é treinada pra te agradar. A solução não é um prompt mágico: é montar um CONSELHO de especialistas reais, uma diretoria que debate entre si e te QUESTIONA antes de você decidir. Tipo chamar os capitães mais experientes do porto pra discutir a rota antes de zarpar.",
   },
   {
     kind: "fala",
     mascote: "pensando",
-    titulo: "A ordem importa demais",
+    titulo: "A ordem de ouro do Conselho",
     texto:
-      "O conselho te dá 3 respostas possíveis. Você lê as três e escolhe UMA. Só ENTÃO você adiciona sua opinião e pede pro conselho revisar. Assim sua cabeça não suja a análise antes da hora — você decide com o mar limpo.",
+      "Passo 1: jogue o contexto cru, SEM dizer pra que lado você pende (se entregar sua opinião, contamina tudo). Passo 2: monte o conselho de gente real, com trabalho rastreável. Passo 3: eles criam 3 planos bons e 3 não-go, e DISCORDAM entre si. Passo 4: só no fim entra a sua experiência. Passo 5: você sai com um caminho sem viés.",
   },
   {
     kind: "simulador",
     titulo: "O Conselho debatendo 🎩",
-    instrucao: "Toque pra ver o conselho discutir a sua decisão — sem concordar fácil.",
+    instrucao: "Toque pra ver o conselho discutir a sua decisão sem concordar fácil.",
     pedidos: [
       {
         rotulo: "devo comprar um segundo barco pra dobrar os passeios?",
         etiqueta: "decisão grande",
         bom: true,
         resposta:
-          "🎩 Conselheiro do Crescimento: dobra a frota, dobra a receita — vai fundo.\n⚓ Conselheiro do Risco: e se a temporada for fraca? Dois barcos parados afundam o caixa.\n📊 Conselheira dos Números: qual sua taxa de ocupação hoje? Abaixo de 70%, é cedo demais.\n\nNão concordamos — de propósito. Qual desses pontos você ainda não tinha pensado?",
+          "🎩 Conselheiro do Crescimento: dobra a frota, dobra a receita, vai fundo.\n⚓ Conselheiro do Risco: e se a temporada for fraca? Dois barcos parados afundam o caixa.\n📊 Conselheira dos Números: qual sua taxa de ocupação hoje? Abaixo de 70%, é cedo demais.\n\nNão concordamos, de propósito. Qual desses pontos você ainda não tinha pensado?",
       },
     ],
     sucesso: "Sentiu o atrito? Isso é ouro. Espelho que concorda não serve.",
   },
   {
+    kind: "experimento",
+    titulo: "Missão: rode o Conselho na sua decisão de verdade",
+    missao: "Pense numa decisão real que está te tirando o sono. Copie o prompt do Conselho abaixo, cole numa IA, e troque os colchetes pela sua situação. Deixe ela te entrevistar antes de qualquer plano.",
+    ondeFazer: "na sua IA",
+    prompt: `Você é meu copiloto de decisão. Conduza nesta ordem, um passo de cada vez. Não adiante.
+
+PASSO 1 - CONTEXTO (só contexto):
+Meu objetivo: [DESCREVA O RESULTADO EXATO QUE VOCÊ QUER].
+Me faça perguntas pra coletar o contexto. Não me deixe colocar minha opinião nem pra que lado pendo. Pare antes de perguntar o que eu acho.
+
+PASSO 2 - CONSELHO DE ESPECIALISTAS REAIS:
+Monte um conselho de especialistas reais na área (ou me sugira quem). Use o trabalho real e rastreável deles, com citações. Nunca Wikipedia ou Reddit.
+
+PASSO 3 - OS PLANOS:
+Pelo menos 3 membros debatem e DISCORDAM, com os Seis Chapéus. Rode um red team. Entregue 3 planos bons e 3 não-go. Eu escolho 1.
+
+PASSO 4 - MINHA EXPERIÊNCIA:
+Eu pico o plano com minha experiência. Você manda o conselho revisar e refina.
+
+PASSO 5 - RESULTADO:
+Me entregue um caminho forte e sem viés.`,
+    pergunta: "O que o Conselho fez de diferente?",
+    resultados: [
+      {
+        rotulo: "Me fez perguntas e não puxou meu saco",
+        reacao: "ISSO, capitão! Sentiu a diferença? Em vez de concordar, ela cavou o contexto e se preparou pra te dar a verdade. Esse é o método que separa decisão de capitão de decisão no chute.",
+        ideal: true,
+      },
+      {
+        rotulo: "O conselho discordou entre si",
+        reacao: "PERFEITO! O atrito é o ouro. Quando os especialistas discordam, aparecem os pontos cegos que você sozinho nunca veria. Foi exatamente pra isso que você montou o conselho.",
+        ideal: true,
+      },
+      {
+        rotulo: "Saiu meio bagunçado, vou refinar",
+        reacao: "Tranquilo! É só dizer 'volte pro passo 1' ou 'só contexto por enquanto'. Você conduz o conselho. Quanto mais você usa, mais afiado fica.",
+      },
+    ],
+    fechamento: "Convoquei meu Conselho ⚓",
+  },
+  {
     kind: "tesouro",
     titulo: "🎩 O Prompt do Conselho de Especialistas",
     texto:
-      "Aqui está o prompt pronto, capitão. Copie, preencha os [colchetes] com a sua decisão real, e veja como é diferente de só 'perguntar pra IA'. Guarde esse baú.",
-    prompt: `Quero tomar uma decisão importante: [DESCREVA A DECISÃO EM 1-2 FRASES].
+      "Guarde o prompt completo no baú. Da próxima decisão grande, é só puxar daqui, preencher e colar. Esse é o nugget de mestre.",
+    prompt: `Você é meu copiloto de decisão. Conduza nesta ordem, um passo de cada vez. Não adiante.
 
-Aqui vai um contexto curto: [JOGUE O CONTEXTO BRUTO, SEM ORGANIZAR].
+PASSO 1 - CONTEXTO (só contexto):
+Meu objetivo: [DESCREVA O RESULTADO EXATO QUE VOCÊ QUER].
+Me faça perguntas pra coletar o contexto da minha situação.
+Não faça perguntas enviesadas que me deixem colocar minha opinião, crença ou estratégia.
+Seja tão específico que revele contextos que eu nem percebi, coisas que escondo de mim mesmo por ego, drama ou medo de falhar.
+PARE antes de perguntar o que eu acho. Esta fase é só contexto.
 
-FASE 1 — SÓ CONTEXTO (não decida nada ainda):
-Faça uma série de perguntas pra cobrir todas as lacunas e pistas de contexto — inclusive coisas que eu posso estar escondendo de mim mesmo por ego ou pra proteger meu próprio raciocínio.
-- Pergunte SÓ sobre contexto, não sobre a decisão. Ainda não estamos estrategizando.
-- NÃO faça perguntas que me deixem colocar minha opinião ou revelar pra que lado eu já estou inclinado. Contexto puro.
+PASSO 2 - CONSELHO DE ESPECIALISTAS REAIS:
+Monte um conselho de especialistas reais na área do meu contexto (ou me sugira quem).
+Pesquise o trabalho real, factual e rastreável dessas pessoas e aja com base nas ações reais delas, não no que você acha que diriam. Se a decisão for importante, traga citações pra eu conferir.
+NUNCA use Wikipedia, Reddit ou sites duvidosos. Só material oficial.
 
-FASE 2 — MONTAR O CONSELHO:
-Se você conhece os maiores especialistas reais dessa área, use-os. Se não souber, primeiro me diga quem são.
-Crie um conselho de diretores que DISCUTE entre si usando "chapéus de pensamento" diferentes, e que NÃO concorda na hora só pra terminar a tarefa.
-Membros do conselho: [NOMES + ÁREA DE EXPERTISE, ou peça sugestões].
-Use conceitos baseados em TRABALHO REAL e rastreável dessas pessoas (com links e citações de verdade), não no que você ACHA que elas diriam.
-Depois, peça que o conselho me diga: com base no contexto, há alguma lacuna que eu preciso explicar melhor antes de continuar?
+PASSO 3 - OS PLANOS:
+Pelo menos 3 membros do conselho debatem e DISCORDAM entre si, nos princípios, usando os Seis Chapéus do Pensamento e jogando cenários.
+Rode um red team em todos os planos. Entregue 3 planos bons e 3 não-go (com o que pode dar errado em cada não-go). Eu escolho 1 dos 3 melhores.
 
-FASE 3 — RODAR O CONSELHO:
-Rode o conselho e chegue a 3 respostas possíveis pro problema. Vou ler as 3 e escolher 1.
-SÓ DEPOIS que eu escolher, eu adiciono minha opinião e meus comentários — e aí você pede pro conselho revisar a decisão com isso.`,
+PASSO 4 - MINHA EXPERIÊNCIA:
+Eu entro com minha experiência real, pico o plano (o que gosto, o que não gosto, bem descritivo). Você manda o conselho rodar o mesmo sistema de revisão e refina.
+
+PASSO 5 - RESULTADO:
+Me entregue um caminho forte e sem viés.`,
   },
   {
     kind: "premio",
     emoji: "🏆",
     titulo: "Você desbloqueou o Conselho!",
     texto:
-      "Nugget de mestre no bolso, capitão. Da próxima decisão grande — um preço novo, contratar alguém, um investimento — não pergunte pra IA: convoque o Conselho. A verdade vale mais que o elogio.",
+      "Nugget de mestre no bolso, capitão. Da próxima decisão grande, um preço novo, contratar alguém, um investimento, não pergunte pra IA: convoque o Conselho. A verdade vale mais que o elogio.",
   },
 ];

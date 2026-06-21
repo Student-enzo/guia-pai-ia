@@ -6,26 +6,30 @@ import { CopyButton, Passos, TenteVoce } from "@/lib/ui";
 import { Desafio } from "./Shell";
 import { dispararConfete } from "@/lib/fun";
 
-// O prompt pronto da técnica do Conselho de Especialistas.
-const PROMPT_CONSELHO = `Quero tomar uma decisão importante: [DESCREVA A DECISÃO EM 1-2 FRASES].
+// O prompt pronto do método de decisão de 5 passos do Enzo.
+const PROMPT_CONSELHO = `Voce e meu copiloto de decisao. Conduza nesta ordem, um passo de cada vez. Nao adiante.
 
-Aqui vai um contexto curto: [JOGUE O CONTEXTO BRUTO, SEM ORGANIZAR].
+PASSO 1 — CONTEXTO (so contexto):
+Meu objetivo: [DESCREVA O RESULTADO EXATO QUE VOCE QUER].
+Me faca perguntas pra coletar o contexto da minha situacao.
+- Nao faca perguntas enviesadas que me deixem colocar minha opiniao, crenca ou estrategia.
+- Seja tao especifico que revele contextos que eu nem percebi — coisas que escondo de mim mesmo por ego, drama ou medo de falhar.
+- PARE antes de perguntar o que eu acho ou como quero seguir. Esta fase e so contexto.
 
-FASE 1 — SÓ CONTEXTO (não decida nada ainda):
-Faça uma série de perguntas pra cobrir todas as lacunas e pistas de contexto — inclusive coisas que eu posso estar escondendo de mim mesmo por ego ou pra proteger meu próprio raciocínio.
-- Pergunte SÓ sobre contexto, não sobre a decisão. Ainda não estamos estrategizando.
-- NÃO faça perguntas que me deixem colocar minha opinião ou revelar pra que lado eu já estou inclinado. Contexto puro.
+PASSO 2 — CONSELHO DE ESPECIALISTAS REAIS:
+Monte um conselho de especialistas reais na area do meu contexto (ou me sugira quem sao).
+Pesquise o trabalho REAL, factual e rastreavel dessas pessoas e aja com base nas acoes reais delas, nao no que voce acha que diriam (nada de invencao). Se a decisao for importante, traga as citacoes pra eu conferir que e oficial.
+NUNCA use Wikipedia, Reddit ou sites nao confiaveis. So material oficial dos especialistas.
 
-FASE 2 — MONTAR O CONSELHO:
-Se você conhece os maiores especialistas reais dessa área, use-os. Se não souber, primeiro me diga quem são.
-Crie um conselho de diretores que DISCUTE entre si usando "chapéus de pensamento" diferentes, e que NÃO concorda na hora só pra terminar a tarefa.
-Membros do conselho: [NOMES + ÁREA DE EXPERTISE, ou peça sugestões].
-Use conceitos baseados em TRABALHO REAL e rastreável dessas pessoas (com links e citações de verdade), não no que você ACHA que elas diriam.
-Depois, peça que o conselho me diga: com base no contexto, há alguma lacuna que eu preciso explicar melhor antes de continuar?
+PASSO 3 — OS PLANOS:
+Pelo menos 3 membros do conselho debatem e DISCORDAM entre si, indo e voltando nos principios, usando os Seis Chapeus do Pensamento e jogando cenarios.
+Rode /red-team em todos os planos. Entregue 3 planos bons + 3 nao-go (com o que pode dar errado em cada nao-go). Eu escolho 1 dos 3 melhores.
 
-FASE 3 — RODAR O CONSELHO:
-Rode o conselho e chegue a 3 respostas possíveis pro problema. Vou ler as 3 e escolher 1.
-SÓ DEPOIS que eu escolher, eu adiciono minha opinião e meus comentários — e aí você pede pro conselho revisar a decisão com isso.`;
+PASSO 4 — MINHA EXPERIENCIA:
+Eu entro com minha experiencia real e pico o plano (o que gosto, o que nao gosto, bem descritivo). Voce manda o conselho rodar o mesmo sistema de revisao e refina.
+
+PASSO 5 — RESULTADO:
+Me entregue um caminho forte e sem vies. (Esse metodo tambem serve pra autoconhecimento.)`;
 
 // Seção BÔNUS — não é um módulo travado, é uma recompensa avançada.
 export function BonusConselho() {
