@@ -10,7 +10,7 @@ import { MODULOS } from "@/lib/moduleMeta";
 import { useDadJoke } from "@/lib/fun";
 import { NEWS, CONCEITOS, AIS } from "@/lib/news";
 import { SLASHES, SLASH_CATS, INSTALACAO_PASSOS } from "@/lib/slash";
-import { montarMasterPrompt, montarPromptPesquisa, PERGUNTAS_CONTEXTO, PERGUNTAS_VIES } from "@/lib/masterPrompt";
+import { montarMasterPrompt, montarPromptPesquisa, perguntasGeradas, montarPromptFinal, PERGUNTAS_CONTEXTO, PERGUNTAS_VIES } from "@/lib/masterPrompt";
 
 const ACCENT: Record<string, string> = {
   teal: C.sea, gold: C.brass, green: C.green, coral: C.coral, purple: C.purple,
@@ -37,9 +37,9 @@ const wrap: React.CSSProperties = { maxWidth: 1080, margin: "0 auto", padding: "
 function rankOf(n: number): { nome: string; emoji: string } {
   if (n >= 10) return { nome: "Capitão de IA", emoji: "🧭" };
   if (n >= 7)  return { nome: "Navegador de IA", emoji: "⚓" };
-  if (n >= 4)  return { nome: "Timoneiro", emoji: "🛞" };
+  if (n >= 4)  return { nome: "Timoneiro de IA", emoji: "🛞" };
   if (n >= 1)  return { nome: "Marinheiro de IA", emoji: "⛵" };
-  return { nome: "Grumete a bordo", emoji: "🪢" };
+  return { nome: "Iniciante a bordo", emoji: "🪢" };
 }
 
 export default function Home() {
@@ -87,8 +87,7 @@ function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }
 // ── HERO ─────────────────────────────────────────────────────────────────────
 function Hero() {
   const { totalDone } = useProgress();
-  const router = useRouter();
-  const primeiro = useFirstIncomplete();
+  const descer = () => document.getElementById("ritmo")?.scrollIntoView({ behavior: "smooth" });
   return (
     <header style={{ position: "relative", minHeight: "92vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "90px 22px 60px", overflow: "hidden" }}>
       <motion.div aria-hidden animate={{ rotate: 360 }} transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
@@ -103,14 +102,14 @@ function Hero() {
         <p className="font-body" style={{ fontSize: 18, color: C.textMuted, maxWidth: 540, margin: "0 auto 32px", lineHeight: 1.65 }}>
           A bússola pra navegar o mar da Inteligência Artificial — feita pra quem comanda grandes travessias. Sem código, no seu ritmo, de ilha em ilha.
         </p>
-        <motion.button onClick={() => router.push(`/modulo/${primeiro}`)} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+        <motion.button onClick={descer} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
           style={{ background: C.brass, color: "#0A0B0D", border: "none", padding: "16px 38px", borderRadius: 999, fontSize: 16, fontWeight: 800, fontFamily: "'Plus Jakarta Sans', sans-serif", cursor: "pointer", boxShadow: `0 16px 40px -12px ${C.brass}66` }}>
-          {totalDone > 0 ? "Continuar a travessia →" : "Começar a travessia →"}
+          {totalDone > 0 ? "Continuar a travessia ↓" : "Começar a travessia ↓"}
         </motion.button>
         <div style={{ marginTop: 24 }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 8, background: `${C.brass}1A`, border: `1px solid ${C.brass}55`, borderRadius: 999, padding: "7px 16px" }}>
             <span style={{ fontSize: 16 }}>{rankOf(totalDone).emoji}</span>
-            <span className="label-caps" style={{ color: C.brassLight, fontWeight: 600 }}>Sua patente: {rankOf(totalDone).nome}</span>
+            <span className="label-caps" style={{ color: C.brassLight, fontWeight: 600 }}>Seu nível: {rankOf(totalDone).nome}</span>
           </span>
         </div>
         <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", marginTop: 16 }}>
@@ -126,7 +125,7 @@ function Hero() {
 
 // ── RITMO DA IA ───────────────────────────────────────────────────────────────
 function Ritmo() {
-  const [activeTab, setActiveTab] = useState<"briefing" | "conceitos">("briefing");
+  const [activeTab, setActiveTab] = useState<"briefing" | "conceitos">("conceitos");
   return (
     <section id="ritmo" style={{ padding: "72px 0" }}>
       <div style={wrap}>
@@ -149,7 +148,7 @@ function Ritmo() {
             {/* AI Comparison */}
             <Reveal>
               <div style={{ marginBottom: 32 }}>
-                <p className="label-caps" style={{ color: C.brass, textAlign: "center", marginBottom: 16 }}>as três grandes — diferentes barcos, mesmo mar</p>
+                <p className="label-caps" style={{ color: C.brass, textAlign: "center", marginBottom: 16 }}>as três grandes · diferentes barcos, mesmo mar</p>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 12 }}>
                   {AIS.map((ai) => (
                     <div key={ai.nome} className="card-ayc hoverable" style={{ padding: 22, borderTop: `3px solid ${ai.cor}`, position: "relative", overflow: "hidden" }}>
@@ -488,13 +487,32 @@ function MasterPromptVivo() {
   const [tema, setTema] = useState("");
   const [objetivo, setObjetivo] = useState("");
   const [copiado, setCopiado] = useState(false);
+  const [simular, setSimular] = useState(false);
+  const [respostas, setRespostas] = useState<string[]>([]);
+  const [copiado2, setCopiado2] = useState(false);
 
   const texto = modo === "decisao" ? montarMasterPrompt(tema, objetivo) : montarPromptPesquisa(tema);
+  const perguntas = perguntasGeradas(modo, tema);
+  const promptFinal = montarPromptFinal(modo, tema, objetivo, perguntas, respostas);
+  const temBase = tema.trim().length > 2;
 
   function copiar() {
     navigator.clipboard?.writeText(texto).then(() => {
       setCopiado(true);
       setTimeout(() => setCopiado(false), 1800);
+    });
+  }
+  function copiarFinal() {
+    navigator.clipboard?.writeText(promptFinal).then(() => {
+      setCopiado2(true);
+      setTimeout(() => setCopiado2(false), 1800);
+    });
+  }
+  function setResposta(i: number, v: string) {
+    setRespostas((r) => {
+      const n = [...r];
+      n[i] = v;
+      return n;
     });
   }
 
@@ -565,6 +583,70 @@ function MasterPromptVivo() {
                 {texto}
               </pre>
             </div>
+          </div>
+        </Reveal>
+
+        {/* Interactive workflow — rehearse the conversation here */}
+        <Reveal>
+          <div className="card-ayc" style={{ marginTop: 28, padding: "24px 24px", borderTop: `3px solid ${C.sea}` }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
+              <span style={{ fontSize: 26 }}>🤖</span>
+              <div style={{ flex: 1, minWidth: 220 }}>
+                <h3 className="font-display" style={{ fontSize: 18, fontWeight: 700, color: C.sea, margin: "0 0 4px" }}>Ensaie a conversa aqui</h3>
+                <p className="font-body" style={{ fontSize: 14, color: C.textMuted, lineHeight: 1.6, margin: 0 }}>
+                  Veja as perguntas de contexto que a IA provavelmente vai te fazer, responda aqui, e a página monta o pedido final já recheado com seu contexto. Aí é só copiar e colar.
+                </p>
+              </div>
+            </div>
+
+            {!simular ? (
+              <motion.button
+                onClick={() => temBase && setSimular(true)}
+                whileHover={temBase ? { scale: 1.02 } : {}}
+                disabled={!temBase}
+                style={{ width: "100%", background: temBase ? `${C.sea}1A` : C.card2, border: `1px solid ${temBase ? C.sea + "55" : C.line}`, color: temBase ? C.sea : C.textMuted, padding: "14px 18px", borderRadius: 12, fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 15, cursor: temBase ? "pointer" : "not-allowed" }}>
+                {temBase ? "🦜 Ver o que a IA vai te perguntar →" : "Preencha o assunto lá em cima primeiro ↑"}
+              </motion.button>
+            ) : (
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+                {/* the AI's questions + his answers */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 20 }}>
+                  {perguntas.map((q, i) => (
+                    <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                      <span style={{ fontSize: 20, flexShrink: 0, marginTop: 2 }}>🦜</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ background: C.card2, border: `1px solid ${C.line}`, borderRadius: 12, borderBottomLeftRadius: 4, padding: "10px 13px", marginBottom: 7 }}>
+                          <span className="font-body" style={{ fontSize: 14, color: C.text, lineHeight: 1.5 }}>{q}</span>
+                        </div>
+                        <textarea
+                          value={respostas[i] ?? ""}
+                          onChange={(e) => setResposta(i, e.target.value)}
+                          placeholder="sua resposta (só fatos)…"
+                          rows={2}
+                          style={{ width: "100%", background: "#0A0B0D", border: `1px solid ${C.line}`, borderRadius: 10, padding: "9px 12px", color: C.text, fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 13.5, outline: "none", resize: "vertical", lineHeight: 1.5 }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* the final, context-loaded prompt */}
+                <div style={{ background: "#0A0B0D", border: `1px solid ${C.green}44`, borderRadius: 16, overflow: "hidden" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 16px", borderBottom: `1px solid ${C.line}`, background: "#101216" }}>
+                    <span className="label-caps" style={{ color: C.green }}>✅ pedido final · com seu contexto</span>
+                    <button onClick={copiarFinal} style={{ background: copiado2 ? C.green : `${C.green}22`, border: `1px solid ${copiado2 ? C.green : C.green + "55"}`, borderRadius: 8, padding: "5px 12px", color: copiado2 ? "#0A0B0D" : C.green, fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}>
+                      {copiado2 ? "✓ Copiado!" : "📋 Copiar"}
+                    </button>
+                  </div>
+                  <pre style={{ margin: 0, padding: "16px 18px", fontFamily: "ui-monospace, Menlo, monospace", fontSize: 12.5, color: "#90C4CF", lineHeight: 1.65, whiteSpace: "pre-wrap", wordBreak: "break-word", maxHeight: 360, overflowY: "auto" }}>
+                    {promptFinal}
+                  </pre>
+                </div>
+                <p className="font-body" style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.55, marginTop: 12, marginBottom: 0 }}>
+                  🦜 Loro: esse é o pedido pronto, já com o seu contexto dentro. Cola na IA e ela vai direto pro trabalho, sem precisar te perguntar tudo de novo.
+                </p>
+              </motion.div>
+            )}
           </div>
         </Reveal>
 
