@@ -77,6 +77,21 @@ export const conselho: Step[] = [
       "O conselho te dá 3 respostas possíveis. Você lê as três e escolhe UMA. Só ENTÃO você adiciona sua opinião e pede pro conselho revisar. Assim sua cabeça não suja a análise antes da hora — você decide com o mar limpo.",
   },
   {
+    kind: "simulador",
+    titulo: "O Conselho debatendo 🎩",
+    instrucao: "Toque pra ver o conselho discutir a sua decisão — sem concordar fácil.",
+    pedidos: [
+      {
+        rotulo: "devo comprar um segundo barco pra dobrar os passeios?",
+        etiqueta: "decisão grande",
+        bom: true,
+        resposta:
+          "🎩 Conselheiro do Crescimento: dobra a frota, dobra a receita — vai fundo.\n⚓ Conselheiro do Risco: e se a temporada for fraca? Dois barcos parados afundam o caixa.\n📊 Conselheira dos Números: qual sua taxa de ocupação hoje? Abaixo de 70%, é cedo demais.\n\nNão concordamos — de propósito. Qual desses pontos você ainda não tinha pensado?",
+      },
+    ],
+    sucesso: "Sentiu o atrito? Isso é ouro. Espelho que concorda não serve.",
+  },
+  {
     kind: "tesouro",
     titulo: "🎩 O Prompt do Conselho de Especialistas",
     texto:

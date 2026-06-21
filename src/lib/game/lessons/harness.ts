@@ -79,6 +79,22 @@ export const harness: Step[] = [
     prompt: MASTER_PROMPT,
   },
   {
+    kind: "simulador",
+    titulo: "Depois de colar o Prompt Mágico 🪄",
+    instrucao:
+      "Com ele colado, é só dizer o que quer. Toque e veja a professora trabalhar.",
+    pedidos: [
+      {
+        rotulo: "preciso responder um hóspede chateado com a chuva no passeio",
+        etiqueta: "você pede simples",
+        bom: true,
+        resposta:
+          "Entendi, capitão. Antes, deixa eu te mostrar COMO vou pedir (pra você aprender):\n• Papel: assistente do charter\n• Tom: empático, sem prometer reembolso\n\nAgora a mensagem:\n“Sentimos muito pela chuva de hoje! O mar manda, mas a gente cuida de você: que tal remarcar sem custo pro próximo dia de sol? 🌤️”\n\nReparou? Eu pedi por você, fiz, e te expliquei. 🦜",
+      },
+    ],
+    sucesso: "Isso é o harness: ele pede, faz e ensina — tudo de uma vez.",
+  },
+  {
     kind: "premio",
     emoji: "🏆",
     titulo: "Você desenterrou o Baú!",

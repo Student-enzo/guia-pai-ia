@@ -90,6 +90,22 @@ export const skills: Step[] = [
       "No fundo, uma skill é só um arquivinho de texto descrevendo o comportamento que você quer. O campo mais importante é a DESCRIÇÃO — é por ela que a IA decide sozinha quando usar a skill. Caprichou na descrição, ganhou o jogo.",
   },
   {
+    kind: "simulador",
+    titulo: "Uma skill salva trabalhando 🧰",
+    instrucao:
+      "Imagina que você salvou a sua 'Voz do Capitão'. Agora é só chamar. Toque.",
+    pedidos: [
+      {
+        rotulo: "/voz-capitao escreve um post do passeio ao pôr do sol",
+        etiqueta: "atalho salvo",
+        bom: true,
+        resposta:
+          "🌅 Pôr do sol no mar não se explica, se vive. Suba a bordo e deixe o céu fazer o show enquanto a gente cuida do resto. Vagas pra esta semana — chama no direct! ⛵\n\n(saiu já no SEU tom, sem você reexplicar nada)",
+      },
+    ],
+    sucesso: "Uma vez salva, a skill repete o seu jeito pra sempre.",
+  },
+  {
     kind: "mito",
     afirmacao:
       "Vi na internet um comando mágico tipo /godmode. Vou usar que deixa a IA mais poderosa!",

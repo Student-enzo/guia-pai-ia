@@ -99,6 +99,18 @@ export const bastidores: Step[] = [
       "Ruflo e GSD são ferramentas que organizam enxames de agentes — os capatazes que põem a tripulação inteira pra trabalhar junto e em ordem. Você não precisa entender como funcionam por dentro. Ouviu o nome? Já sabe: 'ah, são os organizadores'.",
   },
   {
+    kind: "swarm",
+    instrucao:
+      "Swarm é isto: vários agentes (a tripulação) fazendo pedaços diferentes ao mesmo tempo, organizados por um capataz.",
+    tarefas: [
+      "Agente 1: pesquisa o assunto",
+      "Agente 2: escreve o rascunho",
+      "Agente 3: confere os erros",
+      "Agente 4: formata bonito",
+    ],
+    sucesso: "Agora 'swarm' não assusta mais",
+  },
+  {
     kind: "premio",
     emoji: "🗝️",
     titulo: "Você ganhou o Decodificador!",

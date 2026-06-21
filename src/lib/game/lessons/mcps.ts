@@ -17,6 +17,22 @@ export const mcps: Step[] = [
       "Um connector (ou MCP) é o CABO que liga a IA nas suas ferramentas de verdade. Plugou o cabo, e de repente ela FAZ coisas: lê email, olha agenda, cria foto pro Instagram do barco.",
   },
   {
+    kind: "simulador",
+    titulo: "A IA plugada no seu Gmail 📧",
+    instrucao:
+      "Com o cabo do Gmail ligado, a IA OLHA seus emails (só leitura). Toque e veja.",
+    pedidos: [
+      {
+        rotulo: "tem algum email de hóspede sobre o passeio de sábado?",
+        etiqueta: "ela vai buscar",
+        bom: true,
+        resposta:
+          "Achei 2 emails sobre sábado:\n• James (10h): pergunta se pode levar as crianças 👨‍👩‍👧\n• Marina (ontem): quer remarcar por causa do vento\n\nQuer que eu rascunhe uma resposta pra cada? (Eu só LEIO — não envio nada sem você mandar.)",
+      },
+    ],
+    sucesso: "Viu? Plugou o cabo, ela passou a trabalhar com as suas coisas.",
+  },
+  {
     kind: "escolha",
     contexto: "A galera chama o MCP de 'USB-C pra IA'.",
     pergunta: "Por que comparam com o USB-C?",

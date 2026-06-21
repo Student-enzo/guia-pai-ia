@@ -18,6 +18,19 @@ export const research: Step[] = [
       "Pergunta do dia a dia (uma data, um nome)? Resposta rápida resolve. Mas pergunta GRANDE — tipo ‘quanto cobrar pelo passeio comparado aos concorrentes?’ — pede um modo mais pesado: a Pesquisa Profunda (Deep Research). Ela lê dezenas de fontes e volta com um relatório completo.",
   },
   {
+    kind: "swarm",
+    instrucao:
+      "É isso que a Pesquisa Profunda faz por dentro: solta uma tripulação inteira, cada um numa fonte, ao mesmo tempo.",
+    tarefas: [
+      "Vasculha o preço dos concorrentes",
+      "Lê as avaliações no Google",
+      "Compara os roteiros e paradas",
+      "Confere a reputação de cada um",
+      "Junta tudo numa tabela",
+    ],
+    sucesso: "Pronto, relatório na mesa",
+  },
+  {
     kind: "mito",
     afirmacao:
       "Pra toda pergunta vale a pena ligar a Pesquisa Profunda e esperar o relatão.",

@@ -26,6 +26,23 @@ export const metaprompt: Step[] = [
       "“Transforme isso num pedido bem feito e me mostre antes de fazer.” Cole sua ideia solta, diga isso, e a IA arruma a casa por você.",
   },
   {
+    kind: "simulador",
+    titulo: "A frase mágica em ação ✨",
+    instrucao:
+      "Nem sabe escrever o pedido? Joga a ideia torta e manda a IA arrumar. Toque e veja.",
+    pedidos: [
+      {
+        rotulo:
+          "quero avisar os hóspedes do passeio de amanhã, mas não sei escrever — transforma isso num pedido bem feito e me mostra antes de fazer",
+        etiqueta: "ideia torta",
+        bom: true,
+        resposta:
+          "Boa! Entendi. Aqui está o pedido pronto pra você usar:\n\n“Escreva uma mensagem curta e calorosa de WhatsApp avisando os hóspedes do passeio de amanhã: horário, ponto de encontro e o que levar. Sem inventar preço.”\n\nQuer que eu já escreva a mensagem com esse pedido? ✅",
+      },
+    ],
+    sucesso: "Viu? Você falou torto, ela devolveu redondo. Esse é o truque.",
+  },
+  {
     kind: "escolha",
     contexto: "Você quer avisar os hóspedes do passeio de amanhã, mas não sabe escrever o pedido.",
     pergunta: "Qual é o jeito esperto de fazer?",

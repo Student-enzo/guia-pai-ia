@@ -108,6 +108,20 @@ export const diploma: Step[] = [
       "É MITO, e que bom! O que você aprendeu vale em QUALQUER IA. A habilidade viaja entre todas — não decorou botão, aprendeu a navegar.",
   },
   {
+    kind: "construir",
+    instrucao:
+      "Prova final, capitão: monte um pedido perfeito de uma vez só. Papel → Tarefa → Detalhes → Formato, e envie.",
+    blocos: [
+      { etiqueta: "PAPEL", texto: "Você é meu assistente do charter", cor: "#B0894F" },
+      { etiqueta: "TAREFA", texto: "escreva um anúncio", cor: "#6FA8AD" },
+      { etiqueta: "DETALHES", texto: "do passeio ao pôr do sol de sábado", cor: "#4A9B7F" },
+      { etiqueta: "FORMATO", texto: "curto e animado pro Instagram", cor: "#8A6FB0" },
+    ],
+    resposta:
+      "🌅 Sábado tem magia: passeio ao pôr do sol, mar calmo e o céu pegando fogo de laranja. Poucas vagas — garanta a sua e venha ver o dia se despedir do melhor lugar. ⛵ #charter #pordosol",
+    sucesso: "Formatura merecida! Pedido perfeito, de primeira. 🎓",
+  },
+  {
     kind: "premio",
     emoji: "🎓",
     titulo: "Diploma de Navegador de IA! ⚓",
