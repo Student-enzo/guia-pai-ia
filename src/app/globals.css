@@ -1,0 +1,104 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* AYC Palette */
+  --navy-deep:   #0F2040;
+  --navy:        #1C3F6E;
+  --navy-dark:   #152E52;
+  --seafoam:     #4A9B7F;
+  --seafoam-light: #5BB893;
+  --gold:        #F59E0B;
+  --gold-light:  #FCD34D;
+  --off-white:   #F4F7FA;
+  --cool-light:  #EEF2F7;
+  --muted:       #93b8d4;
+
+  --background: var(--navy-deep);
+  --foreground: var(--off-white);
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* AYC colors as Tailwind tokens */
+  --color-navy-deep:    #0F2040;
+  --color-navy:         #1C3F6E;
+  --color-navy-dark:    #152E52;
+  --color-seafoam:      #4A9B7F;
+  --color-seafoam-light:#5BB893;
+  --color-gold:         #F59E0B;
+  --color-gold-light:   #FCD34D;
+  --color-off-white:    #F4F7FA;
+  --color-cool-light:   #EEF2F7;
+  --color-muted:        #93b8d4;
+}
+
+body {
+  background: var(--navy-deep);
+  color: var(--off-white);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--navy-dark); }
+::-webkit-scrollbar-thumb { background: var(--seafoam); border-radius: 3px; }
+
+/* Focus ring */
+*:focus-visible { outline: 2px solid var(--seafoam); outline-offset: 2px; }
+
+/* Ticker animation */
+@keyframes ticker {
+  0%   { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+.ticker-anim { animation: ticker 35s linear infinite; }
+.ticker-anim:hover { animation-play-state: paused; }
+
+/* Pulse dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* Gold glow */
+.glow-gold    { box-shadow: 0 0 40px rgba(245,158,11,0.12); }
+.glow-seafoam { box-shadow: 0 0 40px rgba(74,155,127,0.12); }
+
+/* Nugget border top */
+.nugget-top::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F59E0B, transparent);
+}
+
+/* Smooth card hover */
+.card-lift {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  cursor: pointer;
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(74,155,127,0.14);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-anim, .pulse-dot { animation: none; }
+  .card-lift:hover { transform: none; }
+}
