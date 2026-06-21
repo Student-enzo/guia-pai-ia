@@ -55,7 +55,54 @@ export function StepView({
       return <Praticar step={step} onAdvance={onAdvance} />;
     case "vocab":
       return <Vocab step={step} onAdvance={onAdvance} />;
+    case "bau":
+      return <Bau step={step} onAdvance={onAdvance} />;
   }
+}
+
+// ── BAU (Baú Misterioso — recompensa variável) ──
+function Bau({ step, onAdvance }: { step: Extract<Step, { kind: "bau" }>; onAdvance: () => void }) {
+  const [aberto, setAberto] = useState<number | null>(null);
+  const abrir = () => {
+    // sorteio só no clique (client) — sem Math.random no render pra não quebrar SSR
+    setAberto(Math.floor(Math.random() * step.tesouros.length));
+  };
+  const t = aberto !== null ? step.tesouros[aberto] : null;
+  return (
+    <div style={{ textAlign: "center" }}>
+      <span className="label-caps" style={{ color: C.brass }}>Baú misterioso</span>
+      <h3 style={{ ...tituloStyle, textAlign: "center", marginTop: 8 }}>{step.titulo}</h3>
+      {!t ? (
+        <>
+          <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 15.5, color: C.textMuted, lineHeight: 1.55, margin: "0 0 24px" }}>{step.intro}</p>
+          <motion.button
+            onClick={abrir}
+            whileHover={{ scale: 1.06, rotate: -2 }}
+            whileTap={{ scale: 0.92 }}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ y: { duration: 2, repeat: Infinity } }}
+            style={{ fontSize: 90, background: "none", border: "none", cursor: "pointer", marginBottom: 18, filter: `drop-shadow(0 10px 24px ${C.brass}55)` }}
+            aria-label="Abrir o baú"
+          >
+            🧰
+          </motion.button>
+          <div>
+            <ChunkyButton cor={C.brass} onClick={abrir}>Abrir o baú 🗝️</ChunkyButton>
+          </div>
+        </>
+      ) : (
+        <motion.div initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 240, damping: 15 }}>
+          <motion.div initial={{ rotate: -12, scale: 0.5 }} animate={{ rotate: 0, scale: 1 }} style={{ fontSize: 64, marginBottom: 6 }}>🎁</motion.div>
+          <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 15, color: C.green, fontWeight: 700, margin: "0 0 14px" }}>{t.nota}</p>
+          <div style={{ background: "#08090B", borderRadius: 14, padding: "14px 14px 12px", border: `1px solid ${C.line}`, textAlign: "left", marginBottom: 20 }}>
+            <pre style={{ color: C.seaLight, fontFamily: "ui-monospace, Menlo, monospace", fontSize: 12.5, lineHeight: 1.55, whiteSpace: "pre-wrap", wordBreak: "break-word", margin: "0 0 12px" }}>{t.prompt}</pre>
+            <CopyButton text={t.prompt} label="Copiar o tesouro" />
+          </div>
+          <ChunkyButton full cor={C.brass} onClick={onAdvance}>Guardar no baú 🏴‍☠️</ChunkyButton>
+        </motion.div>
+      )}
+    </div>
+  );
 }
 
 // ── VOCAB (Decodificador — desbloqueia uma palavra de insider) ──

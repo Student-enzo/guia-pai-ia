@@ -122,6 +122,19 @@ export const diploma: Step[] = [
     sucesso: "Formatura merecida! Pedido perfeito, de primeira. 🎓",
   },
   {
+    kind: "bau",
+    titulo: "Seu presente de formatura",
+    intro:
+      "Você atravessou o mar inteiro, capitão. Abra o baú — tem um prompt de presente lá dentro. E cada vez que voltar, sai um diferente.",
+    tesouros: [
+      { nota: "🎁 O resumidor de email", prompt: "Resuma este email em 3 tópicos curtos e me diga se precisa de resposta urgente:\n[cole o email]" },
+      { nota: "🎁 O tradutor de bordo", prompt: "Traduza esta mensagem pro inglês, tom caloroso e profissional, pronta pra mandar pro hóspede:\n[cole a mensagem]" },
+      { nota: "🎁 O planejador de post", prompt: "Você é meu social media. Crie 3 legendas curtas e animadas pro Instagram do passeio de [DIA], com 1 emoji cada e uma chamada pra reservar." },
+      { nota: "🎁 O conselheiro franco", prompt: "Me dê o melhor argumento A FAVOR e o melhor CONTRA [sua decisão], sem puxar meu saco, e depois sua opinião sincera." },
+    ],
+    sucesso: "Guardado! Volte sempre — o baú dá um tesouro diferente cada vez.",
+  },
+  {
     kind: "premio",
     emoji: "🎓",
     titulo: "Diploma de Navegador de IA! ⚓",

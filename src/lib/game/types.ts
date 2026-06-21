@@ -126,6 +126,15 @@ export type Step =
       prompt?: string; // prompt pronto pra copiar e colar
       fechamento: string;
     }
+  // BAU — "Baú Misterioso": o pai abre e ganha UM tesouro ALEATÓRIO (prompt bônus).
+  // Recompensa variável (Octalysis Mystery Box #72 / Eyal Rewards of the Hunt).
+  | {
+      kind: "bau";
+      titulo: string;
+      intro: string;
+      tesouros: { prompt: string; nota: string }[];
+      sucesso: string;
+    }
   // VOCAB — "Decodificador": revela uma palavra de IA (insider) e a adiciona ao
   // vocabulário do pai. Mecânica de pertencimento (Godin/Cialdini): você agora fala a língua.
   | {
@@ -166,6 +175,7 @@ const NAO_JOGAVEIS = new Set<StepKind>([
   "swarm",
   "praticar",
   "vocab",
+  "bau",
 ]);
 
 /** true se o passo vale ponto/erro (entra no placar e na barra de progresso). */

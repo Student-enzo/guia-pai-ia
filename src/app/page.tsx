@@ -23,6 +23,15 @@ const ACCENT: Record<NewsItem["cor"], string> = {
 
 const wrap: React.CSSProperties = { maxWidth: 1080, margin: "0 auto", padding: "0 22px" };
 
+// patente de insider (identidade — Godin "people like us" / Octalysis Elitism)
+function rankOf(n: number): { nome: string; emoji: string } {
+  if (n >= 10) return { nome: "Capitão de IA", emoji: "🧭" };
+  if (n >= 7) return { nome: "Navegador de IA", emoji: "⚓" };
+  if (n >= 4) return { nome: "Timoneiro", emoji: "🛞" };
+  if (n >= 1) return { nome: "Marinheiro de IA", emoji: "⛵" };
+  return { nome: "Grumete a bordo", emoji: "🪢" };
+}
+
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
@@ -120,8 +129,15 @@ function Hero() {
         >
           {totalDone > 0 ? "Continuar a travessia →" : "Começar a travessia →"}
         </motion.button>
+        {/* patente de insider */}
+        <div style={{ marginTop: 24 }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, background: `${C.brass}1A`, border: `1px solid ${C.brass}55`, borderRadius: 999, padding: "7px 16px" }}>
+            <span style={{ fontSize: 16 }}>{rankOf(totalDone).emoji}</span>
+            <span className="label-caps" style={{ color: C.brassLight, fontWeight: 600 }}>Sua patente: {rankOf(totalDone).nome}</span>
+          </span>
+        </div>
         {/* chips de stats */}
-        <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", marginTop: 28 }}>
+        <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", marginTop: 16 }}>
           {[`${MODULOS.length} ilhas`, "0 código", "2 min por lição", `${totalDone} conquistas`].map((t) => (
             <span key={t} className="label-caps" style={{ background: C.card, border: `1px solid ${C.line}`, borderRadius: 999, padding: "8px 14px", color: C.textMuted }}>{t}</span>
           ))}
