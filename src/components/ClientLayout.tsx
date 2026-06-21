@@ -28,17 +28,16 @@ function TopoFixo() {
         left: 0,
         right: 0,
         zIndex: 50,
-        background: "rgba(36,36,36,0.92)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
+        background: `linear-gradient(180deg, ${C.sea}, ${C.seaDeep})`,
+        boxShadow: "0 4px 16px -6px rgba(14,42,71,0.5)",
       }}
     >
       {/* barra de progresso */}
-      <div style={{ height: 4, background: "rgba(255,255,255,0.12)" }}>
+      <div style={{ height: 5, background: "rgba(255,255,255,0.22)" }}>
         <motion.div
           animate={{ width: `${pct}%` }}
           transition={{ type: "spring", stiffness: 120, damping: 20 }}
-          style={{ height: "100%", background: C.brass }}
+          style={{ height: "100%", background: `linear-gradient(90deg, ${C.sun}, ${C.brassLight})` }}
         />
       </div>
       <div

@@ -3,22 +3,26 @@
 
 :root {
   /* ── Atlantic Yacht Charter palette (from the AYC repo) — navy + teal + sea-green ── */
-  --ink:        #14274A;  /* navy — nav, footer, dark bands */
-  --ink-soft:   #1C3F6E;
+  --ink:        #143A5E;  /* navy — nav, footer, dark bands */
+  --ink-soft:   #1C4E7A;
   --ink-line:   #2A4063;
-  --navy:       #0F2040;
-  --paper:      #FBFAF7;  /* warm cream — main background */
-  --paper-2:    #EEF2F7;  /* cool light blue — alternating bands */
-  --sea:        #6FA8AD;  /* teal accent */
-  --sea-deep:   #4E868C;
-  --sea-light:  #90C4CF;
-  --green:      #4A9B7F;  /* sea-green — "done" state */
-  --brass:      #B0894F;  /* refined gold for "golden nuggets" */
-  --brass-light:#C9A56A;
-  --text:       #1A2A44;  /* navy-dark text on cream */
-  --text-muted: #5C6B82;
-  --on-dark:    #FBFAF7;  /* cream text on charcoal */
-  --on-dark-muted: #A7AEA8;
+  --navy:       #0E2A47;
+  --paper:      #F2FAFF;  /* sky-white — main background */
+  --paper-2:    #E3F1FB;  /* light sky band */
+  --sky:        #DCEFFF;
+  --sky-deep:   #B6E0F5;
+  --sea:        #1FA2C9;  /* vivid sky-teal */
+  --sea-deep:   #147E9E;
+  --sea-light:  #A7E0F2;
+  --green:      #2FBF74;  /* vivid success */
+  --brass:      #E5A636;  /* sun-gold for XP / nuggets */
+  --brass-light:#F4C56B;
+  --sun:        #F7B733;
+  --coral:      #FF5C61;
+  --text:       #143456;  /* navy-dark text */
+  --text-muted: #5A7290;
+  --on-dark:    #F2FAFF;
+  --on-dark-muted: #A7B6C9;
 
   --background: var(--paper);
   --foreground: var(--text);
@@ -110,6 +114,58 @@ body {
 
 /* ════════════ MODO JOGO (Claymorphism) ════════════ */
 .font-game { font-family: 'Nunito', system-ui, sans-serif; }
+
+/* Fundo "mundo": céu → mar, com profundidade. Substitui o branco chapado. */
+.world-bg {
+  background:
+    radial-gradient(120% 80% at 50% -10%, #FFFFFF 0%, var(--sky) 38%, var(--sky-deep) 100%);
+  position: relative;
+  overflow-x: clip;
+}
+/* sol suave no canto */
+.world-bg::before {
+  content: "";
+  position: fixed;
+  top: -60px; right: -40px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(247,183,51,0.45), rgba(247,183,51,0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* O "palco": cartão branco que segura o conteúdo (resolve o "texto solto no branco") */
+.stage {
+  background: #FFFFFF;
+  border-radius: 26px;
+  border: 1px solid #E2EEF7;
+  box-shadow: 0 18px 0 -6px rgba(20,58,94,0.06), 0 26px 50px -22px rgba(20,58,94,0.45);
+  position: relative;
+  z-index: 1;
+}
+
+/* faixa de ondas decorativa (SVG em background) */
+.waves {
+  height: 46px;
+  background-repeat: repeat-x;
+  background-size: 120px 46px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='46' viewBox='0 0 120 46'%3E%3Cpath d='M0 24c15 0 15 12 30 12s15-12 30-12 15 12 30 12 15-12 30-12v22H0z' fill='%231FA2C9' opacity='0.20'/%3E%3Cpath d='M0 30c15 0 15 10 30 10s15-10 30-10 15 10 30 10 15-10 30-10v16H0z' fill='%231FA2C9' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+/* nuvenzinhas que flutuam */
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(26px); }
+}
+.cloud { animation: drift 7s ease-in-out infinite alternate; }
+
+/* selo / chip de seção */
+.chip-soft {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: 12px; letter-spacing: 0.04em;
+  padding: 5px 12px; border-radius: 999px;
+}
 
 /* Botão 3D gordinho (estilo Duolingo): borda de baixo que "afunda" ao apertar */
 .clay {

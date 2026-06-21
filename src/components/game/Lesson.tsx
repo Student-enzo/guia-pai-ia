@@ -78,11 +78,24 @@ export function Lesson({
   const segAtual = step.kind === "fala" || step.kind === "premio" ? resolvidos : resolvidos;
 
   return (
-    <div style={{ minHeight: "100vh", background: C.paper, display: "flex", flexDirection: "column" }}>
-      {/* topo: sair + progresso + vidas */}
-      <div style={{ position: "sticky", top: 52, zIndex: 20, background: C.paper, padding: "14px 18px 10px" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", display: "flex", alignItems: "center", gap: 14 }}>
-          <Link href="/" style={{ fontSize: 22, color: C.textMuted, textDecoration: "none", fontWeight: 800 }} aria-label="Sair">
+    <div className="world-bg" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* topo: sair + progresso + vidas (pílula branca) */}
+      <div style={{ position: "sticky", top: 52, zIndex: 20, padding: "14px 16px 8px" }}>
+        <div
+          style={{
+            maxWidth: 600,
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            background: "#fff",
+            borderRadius: 999,
+            padding: "9px 14px",
+            boxShadow: "0 8px 22px -10px rgba(20,58,94,0.4)",
+            border: "1px solid #E2EEF7",
+          }}
+        >
+          <Link href="/" style={{ fontSize: 20, color: C.textMuted, textDecoration: "none", fontWeight: 900, lineHeight: 1 }} aria-label="Sair">
             ✕
           </Link>
           <ProgressSegmentsWrap total={total} atual={segAtual} />
@@ -90,16 +103,18 @@ export function Lesson({
         </div>
       </div>
 
-      {/* corpo */}
+      {/* corpo — dentro do "palco" */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", width: "100%", padding: "20px 22px 160px" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", width: "100%", padding: "12px 18px 170px" }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={idx}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.25 }}
+              className="stage"
+              initial={{ opacity: 0, y: 22, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.98 }}
+              transition={{ duration: 0.28, type: "spring", stiffness: 260, damping: 24 }}
+              style={{ padding: "26px 22px 24px" }}
             >
               <StepView step={step} onResponder={responder} onAdvance={avancar} locked={!!fb} />
             </motion.div>

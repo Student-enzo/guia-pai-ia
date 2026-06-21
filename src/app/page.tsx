@@ -137,10 +137,10 @@ function Mapa() {
   return (
     <section
       id="mapa"
+      className="world-bg"
       style={{
-        background: C.paper,
         padding: "70px 0 90px",
-        backgroundImage: `linear-gradient(${C.paper}, ${C.paper2})`,
+        backgroundImage: `linear-gradient(180deg, ${C.sky} 0%, ${C.skyDeep} 60%, ${C.seaLight} 100%)`,
       }}
     >
       <div style={{ textAlign: "center", marginBottom: 50, padding: "0 22px" }}>
@@ -152,16 +152,17 @@ function Mapa() {
         </div>
         <h2
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "clamp(28px, 6vw, 44px)",
+            fontFamily: "'Nunito', sans-serif",
+            fontSize: "clamp(30px, 7vw, 46px)",
             color: C.ink,
             margin: 0,
-            fontWeight: 600,
+            fontWeight: 900,
+            letterSpacing: "-0.01em",
           }}
         >
           O Mapa da Viagem
         </h2>
-        <p style={{ color: C.textMuted, fontSize: 17, marginTop: 6 }}>
+        <p style={{ color: C.text, fontSize: 17, marginTop: 6, fontFamily: "'Nunito', sans-serif", fontWeight: 600 }}>
           Toque numa ilha pra começar. As trancadas abrem conforme você avança.
         </p>
       </div>
@@ -174,15 +175,17 @@ function Mapa() {
           padding: "0 22px",
         }}
       >
-        {/* linha da rota (tracejada) */}
+        {/* linha da rota (cordame náutico) */}
         <div
           style={{
             position: "absolute",
             top: 40,
             bottom: 40,
             left: "50%",
-            width: 0,
-            borderLeft: `3px dashed ${C.seaLight}`,
+            width: 8,
+            borderRadius: 999,
+            background: `repeating-linear-gradient(${C.seaDeep} 0 10px, transparent 10px 20px)`,
+            opacity: 0.55,
             transform: "translateX(-50%)",
             zIndex: 0,
           }}
@@ -258,20 +261,24 @@ function No({
           whileTap={unlocked ? { scale: 0.94 } : undefined}
           style={{
             flexShrink: 0,
-            width: 72,
-            height: 72,
+            width: 82,
+            height: 82,
             borderRadius: "50%",
-            border: `4px solid ${cor}`,
+            border: `5px solid #fff`,
             background: corFundo,
             color: done || ehAtual ? "#fff" : C.ink,
-            fontSize: 30,
+            fontSize: 34,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             cursor: unlocked ? "pointer" : "not-allowed",
             boxShadow: ehAtual
-              ? `0 0 0 6px rgba(176,137,79,0.25), 0 10px 24px rgba(0,0,0,0.18)`
-              : "0 8px 20px rgba(20,39,74,0.14)",
+              ? `0 0 0 7px rgba(229,166,54,0.28), 0 8px 0 0 ${C.brassLight}, 0 16px 26px rgba(14,42,71,0.28)`
+              : done
+              ? `0 7px 0 0 ${C.greenDeep}, 0 14px 22px rgba(14,42,71,0.2)`
+              : unlocked
+              ? `0 7px 0 0 ${C.seaDeep}, 0 14px 22px rgba(14,42,71,0.2)`
+              : "0 6px 0 0 #AEB9C7, 0 10px 18px rgba(14,42,71,0.14)",
             position: "relative",
           }}
         >
@@ -320,28 +327,29 @@ function No({
           )}
           <div
             style={{
-              fontFamily: "'Cinzel', serif",
+              fontFamily: "'Nunito', sans-serif",
               fontSize: 11,
-              letterSpacing: "0.14em",
-              color: meta.isBonus ? C.brass : C.textMuted,
+              fontWeight: 800,
+              letterSpacing: "0.1em",
+              color: meta.isBonus ? C.sunDeep : C.seaDeep,
               marginBottom: 2,
             }}
           >
-            {meta.isBonus ? "★ BÔNUS" : `PARADA ${meta.num}`}
+            {meta.isBonus ? "★ BÔNUS" : `ILHA ${meta.num}`}
           </div>
           <div
             style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 22,
-              fontWeight: 600,
-              color: unlocked ? C.ink : "#9AA6B6",
-              lineHeight: 1.1,
+              fontFamily: "'Nunito', sans-serif",
+              fontSize: 21,
+              fontWeight: 900,
+              color: unlocked ? C.ink : "#8595A8",
+              lineHeight: 1.12,
             }}
           >
             {meta.titulo}
           </div>
-          <div style={{ fontSize: 13.5, color: C.textMuted, marginTop: 2 }}>
-            {unlocked ? meta.subtitulo : "🔒 Termine a parada anterior"}
+          <div style={{ fontSize: 13.5, fontWeight: 600, color: C.textMuted, marginTop: 2, fontFamily: "'Nunito', sans-serif" }}>
+            {unlocked ? meta.subtitulo : "🔒 Termine a ilha anterior"}
           </div>
         </button>
       </div>
