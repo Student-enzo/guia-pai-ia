@@ -126,6 +126,14 @@ export type Step =
       prompt?: string; // prompt pronto pra copiar e colar
       fechamento: string;
     }
+  // VOCAB — "Decodificador": revela uma palavra de IA (insider) e a adiciona ao
+  // vocabulário do pai. Mecânica de pertencimento (Godin/Cialdini): você agora fala a língua.
+  | {
+      kind: "vocab";
+      termo: string;
+      significado: string;
+      insider: string; // "você agora é dos poucos que sabe isso"
+    }
   // Recompensa / fim de mini-sessão (cartão de baú)
   | {
       kind: "premio";
@@ -157,6 +165,7 @@ const NAO_JOGAVEIS = new Set<StepKind>([
   "dial",
   "swarm",
   "praticar",
+  "vocab",
 ]);
 
 /** true se o passo vale ponto/erro (entra no placar e na barra de progresso). */

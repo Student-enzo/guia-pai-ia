@@ -128,6 +128,12 @@ export const mcps: Step[] = [
     fechamento: "Ela virou seu imediato de bordo — começando pela observação.",
   },
   {
+    kind: "vocab",
+    termo: "MCP",
+    significado: "O 'cabo universal' que liga a IA nas suas ferramentas. 'Connector' é só a versão de 1 clique dele. Mesma coisa, nome diferente.",
+    insider: "Sigla que assusta os outros — e você acabou de traduzir numa palavra: cabo.",
+  },
+  {
     kind: "premio",
     emoji: "🔌",
     titulo: "Você ganhou o Cabo Universal!",

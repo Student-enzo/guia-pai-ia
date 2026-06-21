@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { C } from "@/lib/config";
+import { useProgress } from "@/lib/progress";
 import { Step } from "@/lib/game/types";
 import { ChunkyButton, Mascote } from "./atoms";
 import { Simulador, Dial, Construir, Caca, SwarmViz, Transforma } from "./interactive";
@@ -52,7 +53,44 @@ export function StepView({
       return <Transforma step={step} onResponder={onResponder} locked={locked} />;
     case "praticar":
       return <Praticar step={step} onAdvance={onAdvance} />;
+    case "vocab":
+      return <Vocab step={step} onAdvance={onAdvance} />;
   }
+}
+
+// ── VOCAB (Decodificador — desbloqueia uma palavra de insider) ──
+function Vocab({ step, onAdvance }: { step: Extract<Step, { kind: "vocab" }>; onAdvance: () => void }) {
+  const { learnVocab, vocabCount } = useProgress();
+  useEffect(() => {
+    learnVocab(step.termo);
+  }, [learnVocab, step.termo]);
+  return (
+    <div style={{ textAlign: "center" }}>
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 7, marginBottom: 18 }}>
+        <span style={{ fontSize: 18 }}>🔓</span>
+        <span className="label-caps" style={{ color: C.brass }}>Decodificador · palavra desbloqueada</span>
+      </div>
+      <motion.div
+        initial={{ scale: 0.85, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 240, damping: 16 }}
+        style={{ background: "#08090B", border: `1px solid ${C.line}`, borderRadius: 18, padding: "26px 20px", marginBottom: 18 }}
+      >
+        <div className="font-display" style={{ fontSize: 32, fontWeight: 800, color: C.sea, marginBottom: 10, letterSpacing: "-0.01em" }}>
+          {step.termo}
+        </div>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 16, color: C.text, lineHeight: 1.55, margin: 0 }}>
+          {step.significado}
+        </p>
+      </motion.div>
+      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 14.5, color: C.green, fontWeight: 600, lineHeight: 1.5, margin: "0 0 22px" }}>
+        🦜 {step.insider}
+      </p>
+      <ChunkyButton full cor={C.brass} onClick={onAdvance}>
+        Guardar no meu vocabulário ({vocabCount}) →
+      </ChunkyButton>
+    </div>
+  );
 }
 
 // ── PRATICAR (Faça Agora — camada de implementação) ──

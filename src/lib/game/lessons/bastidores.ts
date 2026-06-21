@@ -111,6 +111,12 @@ export const bastidores: Step[] = [
     sucesso: "Agora 'swarm' não assusta mais",
   },
   {
+    kind: "vocab",
+    termo: "Swarm",
+    significado: "Uma FROTA de IAs (agentes) trabalhando juntas ao mesmo tempo, cada uma num pedaço. 'Enxame', em inglês. É o que você viu os barquinhos fazendo.",
+    insider: "Termo de quem está na crista da onda da IA. Você agora fala essa língua.",
+  },
+  {
     kind: "premio",
     emoji: "🗝️",
     titulo: "Você ganhou o Decodificador!",

@@ -18,7 +18,7 @@ export function ClientLayout({ children }: { children: ReactNode }) {
 }
 
 function TopoFixo() {
-  const { totalDone } = useProgress();
+  const { totalDone, vocabCount } = useProgress();
   const pct = Math.min(100, Math.round((totalDone / TOTAL_DESAFIOS) * 100));
   return (
     <header
@@ -75,7 +75,12 @@ function TopoFixo() {
           </span>
         </Link>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          {vocabCount > 0 && (
+            <span style={{ fontSize: 13, color: C.brassLight, fontWeight: 600 }} title="Palavras de IA que você desbloqueou">
+              📖 {vocabCount}
+            </span>
+          )}
           <span style={{ fontSize: 13, color: "#C9C4BB" }}>
             🏝️ {totalDone} <span style={{ opacity: 0.6 }}>/ {TOTAL_DESAFIOS} ilhas</span>
           </span>

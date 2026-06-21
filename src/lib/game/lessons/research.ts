@@ -130,6 +130,12 @@ Regra importante: NÃO invente números (preço, receita, quantidade). Se não t
     fechamento: "Relatório do mercado na mão — com fontes. Decisão de capitão.",
   },
   {
+    kind: "vocab",
+    termo: "Alucinação",
+    significado: "É quando a IA inventa um dado com cara de verdade absoluta. Não é mentira de propósito — ela só 'chuta com confiança'. Por isso a gente confere as fontes.",
+    insider: "Saber essa palavra é saber o maior risco da IA. Pouquíssima gente da sua idade sabe.",
+  },
+  {
     kind: "premio",
     emoji: "🔍",
     titulo: "Você ganhou a Luneta de Pesquisa!",

@@ -16,6 +16,7 @@ import {
 } from "react";
 
 const STORAGE_KEY = "guia-ia-progresso-v1";
+const VOCAB_KEY = "guia-ia-vocab-v1";
 
 // Ordem dos módulos — cada um só abre quando o anterior é concluído.
 export const MODULE_ORDER = [
@@ -48,6 +49,10 @@ type ProgressContextValue = {
   isModuleUnlocked: (moduleId: ModuleId) => boolean;
   /** Total de desafios concluídos no guia inteiro. */
   totalDone: number;
+  /** Vocabulário de IA desbloqueado pelo pai (palavras de insider). */
+  vocab: string[];
+  vocabCount: number;
+  learnVocab: (termo: string) => void;
 };
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
@@ -60,6 +65,7 @@ function moduleOf(challengeId: string): string {
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<ProgressState>({ done: {}, ready: false });
+  const [vocab, setVocab] = useState<string[]>([]);
 
   // Carrega do navegador na primeira renderização.
   useEffect(() => {
@@ -67,9 +73,24 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       const raw = localStorage.getItem(STORAGE_KEY);
       const done = raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
       setState({ done, ready: true });
+      const rv = localStorage.getItem(VOCAB_KEY);
+      if (rv) setVocab(JSON.parse(rv) as string[]);
     } catch {
       setState({ done: {}, ready: true });
     }
+  }, []);
+
+  const learnVocab = useCallback((termo: string) => {
+    setVocab((prev) => {
+      if (prev.includes(termo)) return prev;
+      const next = [...prev, termo];
+      try {
+        localStorage.setItem(VOCAB_KEY, JSON.stringify(next));
+      } catch {
+        /* sem storage */
+      }
+      return next;
+    });
   }, []);
 
   const persist = useCallback((done: Record<string, boolean>) => {
@@ -137,6 +158,9 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         moduleProgress: (m, _t) => moduleProgress(m),
         isModuleUnlocked,
         totalDone,
+        vocab,
+        vocabCount: vocab.length,
+        learnVocab,
       }}
     >
       {children}

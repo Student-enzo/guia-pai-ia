@@ -108,6 +108,12 @@ export const harness: Step[] = [
     fechamento: "Pronto — agora ela te ensina, faz e explica. Pra sempre.",
   },
   {
+    kind: "vocab",
+    termo: "Harness",
+    significado: "É o 'colete' que você bota na IA pra ela trabalhar do SEU jeito. O Prompt Mágico que você acabou de pegar é o seu primeiro harness.",
+    insider: "Palavra de gente que mexe com IA de verdade. Você já tem uma na manga.",
+  },
+  {
     kind: "premio",
     emoji: "🏆",
     titulo: "Você desenterrou o Baú!",

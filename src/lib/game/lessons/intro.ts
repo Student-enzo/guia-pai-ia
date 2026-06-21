@@ -96,6 +96,12 @@ export const intro: Step[] = [
     fechamento: "Viu como é fácil? É só conversar.",
   },
   {
+    kind: "vocab",
+    termo: "Prompt",
+    significado: "É só o nome chique do seu PEDIDO. Toda vez que você escreve algo pra IA, isso é um 'prompt'. Pronto, desmistificado.",
+    insider: "Agora, quando alguém soltar 'prompt' no jantar, você sabe — e a maioria não faz ideia.",
+  },
+  {
     kind: "premio",
     emoji: "🧭",
     titulo: "Você ganhou a Bússola!",
