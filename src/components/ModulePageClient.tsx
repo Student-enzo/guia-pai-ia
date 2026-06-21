@@ -7,6 +7,8 @@ import { useProgress } from "@/lib/progress";
 import { metaBySlug, nextSlug, prevSlug } from "@/lib/moduleMeta";
 import { MOD_COMPONENTS } from "@/lib/moduleComponents";
 import { IMG_IDS } from "@/lib/images";
+import { getLesson } from "@/lib/game/lessons";
+import { Lesson } from "./game/Lesson";
 
 const px = (id: number, w = 1600) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
@@ -22,6 +24,12 @@ export function ModulePageClient({ slug }: { slug: string }) {
     !ready || meta.moduleId === "conselho" || isModuleUnlocked(meta.moduleId as never);
   const prox = nextSlug(slug);
   const ant = prevSlug(slug);
+
+  // Se existe uma lição-JOGO pra esse módulo, renderiza o jogo em tela cheia.
+  const licao = getLesson(slug);
+  if (licao && unlocked) {
+    return <Lesson slug={slug} moduleId={meta.moduleId} steps={licao} proximo={prox} />;
+  }
 
   return (
     <main style={{ background: C.paper, minHeight: "100vh" }}>

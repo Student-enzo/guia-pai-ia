@@ -38,7 +38,7 @@ export const MODULOS: ModMeta[] = [
     titulo: "Falar com a IA",
     subtitulo: "A receita do pedido perfeito.",
     imgId: IMG_IDS.prompting,
-    desafios: 2,
+    desafios: 1,
   },
   {
     slug: "metaprompt",
@@ -79,7 +79,7 @@ export const MODULOS: ModMeta[] = [
     titulo: "Skills & Comandos /",
     subtitulo: "Salvar o seu jeito de fazer.",
     imgId: IMG_IDS.skills,
-    desafios: 2,
+    desafios: 1,
   },
   {
     slug: "mcps",
@@ -89,7 +89,7 @@ export const MODULOS: ModMeta[] = [
     titulo: "MCPs & Connectors",
     subtitulo: "Plugar a IA nas suas ferramentas.",
     imgId: IMG_IDS.mcps,
-    desafios: 2,
+    desafios: 1,
   },
   {
     slug: "research",

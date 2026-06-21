@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { C } from "@/lib/config";
 import { ProgressProvider, useProgress } from "@/lib/progress";
 
-const TOTAL_DESAFIOS = 13;
+const TOTAL_DESAFIOS = 10; // 10 ilhas (módulos)
 
 export function ClientLayout({ children }: { children: ReactNode }) {
   return (
@@ -76,7 +76,7 @@ function TopoFixo() {
 
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <span style={{ fontSize: 13, color: "#C9C4BB" }}>
-            ⭐ {totalDone} <span style={{ opacity: 0.6 }}>/ {TOTAL_DESAFIOS} XP</span>
+            🏝️ {totalDone} <span style={{ opacity: 0.6 }}>/ {TOTAL_DESAFIOS} ilhas</span>
           </span>
           <Link
             href="/"
