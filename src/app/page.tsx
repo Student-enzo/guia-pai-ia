@@ -140,7 +140,7 @@ function Mapa() {
       className="world-bg"
       style={{
         padding: "70px 0 90px",
-        backgroundImage: `linear-gradient(180deg, ${C.sky} 0%, ${C.skyDeep} 60%, ${C.seaLight} 100%)`,
+        
       }}
     >
       <div style={{ textAlign: "center", marginBottom: 50, padding: "0 22px" }}>
@@ -154,7 +154,7 @@ function Mapa() {
           style={{
             fontFamily: "'Nunito', sans-serif",
             fontSize: "clamp(30px, 7vw, 46px)",
-            color: C.ink,
+            color: C.text,
             margin: 0,
             fontWeight: 900,
             letterSpacing: "-0.01em",
@@ -227,7 +227,7 @@ function No({
   const done = feitos >= meta.desafios && ready;
 
   const cor = done ? C.green : ehAtual ? C.brass : unlocked ? C.sea : "#B7C0CE";
-  const corFundo = done ? C.green : ehAtual ? C.brass : unlocked ? C.paper : "#E2E7EE";
+  const corFundo = done ? C.green : ehAtual ? C.brass : unlocked ? C.card2 : "#262A30";
 
   const irPro = () => {
     if (unlocked) router.push(`/modulo/${meta.slug}`);
@@ -266,7 +266,7 @@ function No({
             borderRadius: "50%",
             border: `5px solid #fff`,
             background: corFundo,
-            color: done || ehAtual ? "#fff" : C.ink,
+            color: done || ehAtual ? "#0A0B0D" : C.text,
             fontSize: 34,
             display: "flex",
             alignItems: "center",
@@ -342,7 +342,7 @@ function No({
               fontFamily: "'Nunito', sans-serif",
               fontSize: 21,
               fontWeight: 900,
-              color: unlocked ? C.ink : "#8595A8",
+              color: unlocked ? C.text : "#5A6470",
               lineHeight: 1.12,
             }}
           >

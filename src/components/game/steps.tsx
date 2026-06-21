@@ -55,7 +55,7 @@ const tituloStyle: React.CSSProperties = {
   fontFamily: "'Nunito', sans-serif",
   fontWeight: 800,
   fontSize: 23,
-  color: C.ink,
+  color: C.text,
   lineHeight: 1.25,
   marginBottom: 16,
 };
@@ -124,8 +124,8 @@ function Tesouro({ step, onAdvance }: { step: Extract<Step, { kind: "tesouro" }>
       <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16, color: C.text, fontWeight: 600, textAlign: "center", marginBottom: 16 }}>
         {step.texto}
       </p>
-      <div style={{ background: C.ink, borderRadius: 16, padding: "16px 16px 14px" }}>
-        <pre style={{ color: "#E8E4DC", fontFamily: "ui-monospace, Menlo, monospace", fontSize: 12.5, lineHeight: 1.55, whiteSpace: "pre-wrap", wordBreak: "break-word", margin: "0 0 14px", maxHeight: 200, overflowY: "auto" }}>
+      <div style={{ background: "#08090B", borderRadius: 16, padding: "16px 16px 14px", border: `1px solid ${C.line}` }}>
+        <pre style={{ color: C.seaLight, fontFamily: "ui-monospace, Menlo, monospace", fontSize: 12.5, lineHeight: 1.55, whiteSpace: "pre-wrap", wordBreak: "break-word", margin: "0 0 14px", maxHeight: 200, overflowY: "auto" }}>
           {step.prompt}
         </pre>
         <CopyButton text={step.prompt} label="Copiar o tesouro" />
@@ -153,8 +153,8 @@ function OpcoesLista({
       {opcoes.map((o, i) => {
         const sel = escolhida === i;
         const mostra = locked && escolhida !== null;
-        const cor = mostra && sel ? (o.certa ? C.green : "#E2574C") : "#fff";
-        const txt = mostra && sel ? "#fff" : C.ink;
+        const cor = mostra && sel ? (o.certa ? C.green : C.coral) : C.card2;
+        const txt = mostra && sel ? "#fff" : C.text;
         return (
           <button
             key={i}
@@ -172,7 +172,7 @@ function OpcoesLista({
               padding: "16px 18px",
               fontSize: 17,
               fontWeight: 700,
-              border: `2px solid ${sel ? "transparent" : C.paper2}`,
+              border: `2px solid ${sel ? "transparent" : C.line}`,
             }}
           >
             {o.texto}
@@ -230,15 +230,15 @@ function Mito({ step, onResponder, locked }: { step: Extract<Step, { kind: "mito
     <div>
       <div
         style={{
-          background: "#fff",
-          border: `2px solid ${C.paper2}`,
+          background: C.card2,
+          border: `1px solid ${C.line}`,
           borderRadius: 18,
           padding: "22px 20px",
           marginBottom: 20,
           fontFamily: "'Nunito', sans-serif",
           fontSize: 20,
           fontWeight: 800,
-          color: C.ink,
+          color: C.text,
           textAlign: "center",
           boxShadow: "0 4px 0 0 rgba(0,0,0,0.05)",
         }}
@@ -246,10 +246,10 @@ function Mito({ step, onResponder, locked }: { step: Extract<Step, { kind: "mito
         “{step.afirmacao}”
       </div>
       <div style={{ display: "flex", gap: 12 }}>
-        <ChunkyButton full cor={clicou === false ? "#E2574C" : "#fff"} textColor={clicou === false ? "#fff" : C.ink} disabled={locked} onClick={() => responder(false)} className={clicou === false ? "shake" : ""}>
+        <ChunkyButton full cor={clicou === false ? C.coral : C.card2} textColor={clicou === false ? "#fff" : C.text} disabled={locked} onClick={() => responder(false)} className={clicou === false ? "shake" : ""}>
           ✋ Mito
         </ChunkyButton>
-        <ChunkyButton full cor={clicou === true ? C.green : "#fff"} textColor={clicou === true ? "#fff" : C.ink} disabled={locked} onClick={() => responder(true)} className={clicou === true ? "pop" : ""}>
+        <ChunkyButton full cor={clicou === true ? C.green : C.card2} textColor={clicou === true ? "#fff" : C.text} disabled={locked} onClick={() => responder(true)} className={clicou === true ? "pop" : ""}>
           ✅ Verdade
         </ChunkyButton>
       </div>
@@ -306,19 +306,19 @@ function Monte({ step, onResponder, locked }: { step: Extract<Step, { kind: "mon
   );
 }
 
-function Chip({ texto, onClick, cor = "#fff" }: { texto: string; onClick: () => void; cor?: string }) {
+function Chip({ texto, onClick, cor = "" }: { texto: string; onClick: () => void; cor?: string }) {
   return (
     <button
       onClick={onClick}
       className="clay"
       style={{
-        background: cor,
-        color: cor === "#fff" ? C.ink : "#fff",
+        background: cor || C.card2,
+        color: cor ? "#fff" : C.text,
         padding: "9px 14px",
         fontSize: 15,
         fontWeight: 700,
-        border: `2px solid ${C.paper2}`,
-        boxShadow: "0 3px 0 0 rgba(0,0,0,0.12)",
+        border: `1px solid ${C.line}`,
+        boxShadow: "0 3px 0 0 rgba(0,0,0,0.4)",
       }}
     >
       {texto}
@@ -359,12 +359,12 @@ function Ligue({ step, onResponder }: { step: Extract<Step, { kind: "ligue" }>; 
               onClick={() => setSelE(i)}
               className="clay"
               style={{
-                background: feitos.has(i) ? C.green : selE === i ? C.brass : "#fff",
-                color: feitos.has(i) || selE === i ? "#fff" : C.ink,
+                background: feitos.has(i) ? C.green : selE === i ? C.brass : C.card2,
+                color: feitos.has(i) || selE === i ? "#0A0B0D" : C.text,
                 padding: "12px 12px",
                 fontSize: 14,
                 fontWeight: 700,
-                border: `2px solid ${C.paper2}`,
+                border: `1px solid ${C.line}`,
                 opacity: feitos.has(i) ? 0.6 : 1,
               }}
             >
@@ -380,12 +380,12 @@ function Ligue({ step, onResponder }: { step: Extract<Step, { kind: "ligue" }>; 
               onClick={() => tentar(d.par)}
               className={`clay ${erro === d.par ? "shake" : ""}`}
               style={{
-                background: feitos.has(d.par) ? C.green : "#fff",
-                color: feitos.has(d.par) ? "#fff" : C.ink,
+                background: feitos.has(d.par) ? C.green : C.card2,
+                color: feitos.has(d.par) ? "#0A0B0D" : C.text,
                 padding: "12px 12px",
                 fontSize: 14,
                 fontWeight: 700,
-                border: `2px solid ${C.paper2}`,
+                border: `1px solid ${C.line}`,
                 opacity: feitos.has(d.par) ? 0.6 : 1,
               }}
             >

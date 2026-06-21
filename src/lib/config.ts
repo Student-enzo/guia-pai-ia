@@ -12,39 +12,47 @@ export const PAI = {
   negocioCurto: "charter de barcos",
 };
 
-// 🎨 Paleta — JOGO (estilo Duolingo náutico): saturada, alegre, com profundidade.
-// Céu + mar vivos + sol dourado + coral. Texto navy escuro pra contraste forte.
+// 🎨 Paleta — ESCURA estilo Atlantic Yacht Charters (carta náutica noturna).
+// Quase-preto com curvas de nível + brilho teal + dados em teal/dourado/verde/coral.
 export const C = {
-  ink: "#143A5E", // navy de texto/superfícies escuras
-  inkSoft: "#1C4E7A", // navy médio (gradientes)
-  navy: "#0E2A47", // navy mais escuro (rodapé, telas de vitória)
+  // superfícies (escuras)
+  bg: "#0B0C0E", // base quase-preta (página)
+  card: "#15181D", // cartão primário
+  card2: "#1E232B", // cartão elevado / inputs
+  line: "rgba(255,255,255,0.08)", // bordas
+  lineStrong: "rgba(255,255,255,0.14)",
 
-  // superfícies / fundo
-  paper: "#F2FAFF", // branco-céu (fundo claro)
-  paper2: "#E3F1FB", // banda azul-clara
-  sky: "#DCEFFF", // topo do céu (gradiente de fundo)
-  skyDeep: "#B6E0F5", // mar raso (base do gradiente)
+  // tokens escuros legados (fundos profundos, blocos de código, telas de vitória)
+  ink: "#0A0B0D", // mais escuro — bg profundo
+  inkSoft: "#14171C",
+  navy: "#070809",
+  paper: "#0B0C0E", // ex-fundo claro → agora base escura
+  paper2: "#1E232B", // ex-superfície clara → agora superfície escura elevada
+  sky: "#15181D",
+  skyDeep: "#0E1013",
 
-  // mar (cor primária dos botões/ações)
-  sea: "#1FA2C9", // teal-céu vivo
-  seaDeep: "#147E9E", // borda 3D / hover
-  seaLight: "#A7E0F2", // espuma clara
+  // mar / teal (assinatura AYC, links, destaques)
+  sea: "#90C4CF",
+  seaDeep: "#5E97A0",
+  seaLight: "#B6DCE3",
 
-  // sucesso (concluído / acerto)
-  green: "#2FBF74",
-  greenDeep: "#1F9A5B",
+  // sucesso (verde-mar AYC)
+  green: "#4ADE80",
+  greenDeep: "#34D399",
 
-  // ouro / XP / "você está aqui" / tesouros
-  brass: "#E5A636",
-  brassLight: "#F4C56B",
+  // ouro / XP / nuggets
+  brass: "#FBBF24",
+  brassLight: "#FCD34D",
 
-  // sol (CTA quente) e coral (erro)
-  sun: "#F7B733",
-  sunDeep: "#E0901F",
-  coral: "#FF5C61",
-  coralDeep: "#E23B43",
+  // sol (CTA) e coral (erro)
+  sun: "#F7C948",
+  sunDeep: "#D4901A",
+  coral: "#F87171",
+  coralDeep: "#EF4444",
+  purple: "#A78BFA",
 
-  text: "#143456", // corpo (navy escuro, alto contraste)
-  textMuted: "#5A7290",
-  onDark: "#F2FAFF",
+  // texto (claro sobre escuro)
+  text: "#E8ECF1", // corpo (quase branco)
+  textMuted: "#94A0AD",
+  onDark: "#E8ECF1",
 };

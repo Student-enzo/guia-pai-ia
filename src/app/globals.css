@@ -3,26 +3,29 @@
 
 :root {
   /* ── Atlantic Yacht Charter palette (from the AYC repo) — navy + teal + sea-green ── */
-  --ink:        #143A5E;  /* navy — nav, footer, dark bands */
-  --ink-soft:   #1C4E7A;
-  --ink-line:   #2A4063;
-  --navy:       #0E2A47;
-  --paper:      #F2FAFF;  /* sky-white — main background */
-  --paper-2:    #E3F1FB;  /* light sky band */
-  --sky:        #DCEFFF;
-  --sky-deep:   #B6E0F5;
-  --sea:        #1FA2C9;  /* vivid sky-teal */
-  --sea-deep:   #147E9E;
-  --sea-light:  #A7E0F2;
-  --green:      #2FBF74;  /* vivid success */
-  --brass:      #E5A636;  /* sun-gold for XP / nuggets */
-  --brass-light:#F4C56B;
-  --sun:        #F7B733;
-  --coral:      #FF5C61;
-  --text:       #143456;  /* navy-dark text */
-  --text-muted: #5A7290;
-  --on-dark:    #F2FAFF;
-  --on-dark-muted: #A7B6C9;
+  --ink:        #0A0B0D;  /* deepest near-black */
+  --ink-soft:   #14171C;
+  --ink-line:   rgba(255,255,255,0.08);
+  --navy:       #070809;
+  --bg:         #0B0C0E;  /* page base */
+  --card:       #15181D;  /* card surface */
+  --card-2:     #1E232B;
+  --paper:      #0B0C0E;  /* legacy → dark base */
+  --paper-2:    #1E232B;  /* legacy → dark surface */
+  --sky:        #15181D;
+  --sky-deep:   #0E1013;
+  --sea:        #90C4CF;  /* AYC teal */
+  --sea-deep:   #5E97A0;
+  --sea-light:  #B6DCE3;
+  --green:      #4ADE80;
+  --brass:      #FBBF24;  /* gold */
+  --brass-light:#FCD34D;
+  --sun:        #F7C948;
+  --coral:      #F87171;
+  --text:       #E8ECF1;  /* light text on dark */
+  --text-muted: #94A0AD;
+  --on-dark:    #E8ECF1;
+  --on-dark-muted: #94A0AD;
 
   --background: var(--paper);
   --foreground: var(--text);
@@ -53,11 +56,31 @@
 }
 
 body {
-  background: var(--paper);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
+
+/* Carta náutica noturna: curvas de nível + brilho teal sobre quase-preto (estilo AYC) */
+.ayc-bg {
+  position: relative;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(144,196,207,0.10) 0%, transparent 60%),
+    var(--bg);
+}
+.ayc-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/level-curves.svg");
+  background-repeat: repeat;
+  background-size: 612px 792px;
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+}
+.ayc-bg > * { position: relative; z-index: 1; }
 
 /* ── Type helpers ── */
 .font-display { font-family: var(--font-display); }
@@ -115,31 +138,32 @@ body {
 /* ════════════ MODO JOGO (Claymorphism) ════════════ */
 .font-game { font-family: 'Nunito', system-ui, sans-serif; }
 
-/* Fundo "mundo": céu → mar, com profundidade. Substitui o branco chapado. */
+/* Fundo "mundo": carta náutica noturna (curvas de nível + brilho teal) */
 .world-bg {
-  background:
-    radial-gradient(120% 80% at 50% -10%, #FFFFFF 0%, var(--sky) 38%, var(--sky-deep) 100%);
   position: relative;
   overflow-x: clip;
+  background:
+    radial-gradient(ellipse 95% 55% at 50% -5%, rgba(144,196,207,0.12) 0%, transparent 60%),
+    var(--bg);
 }
-/* sol suave no canto */
 .world-bg::before {
   content: "";
   position: fixed;
-  top: -60px; right: -40px;
-  width: 220px; height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(247,183,51,0.45), rgba(247,183,51,0) 70%);
+  inset: 0;
+  background-image: url("/level-curves.svg");
+  background-repeat: repeat;
+  background-size: 612px 792px;
+  opacity: 0.13;
   pointer-events: none;
   z-index: 0;
 }
 
-/* O "palco": cartão branco que segura o conteúdo (resolve o "texto solto no branco") */
+/* O "palco": cartão ESCURO que segura o conteúdo (estilo card AYC) */
 .stage {
-  background: #FFFFFF;
-  border-radius: 26px;
-  border: 1px solid #E2EEF7;
-  box-shadow: 0 18px 0 -6px rgba(20,58,94,0.06), 0 26px 50px -22px rgba(20,58,94,0.45);
+  background: linear-gradient(180deg, #181C22 0%, #14171C 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 30px 60px -28px rgba(0,0,0,0.8);
   position: relative;
   z-index: 1;
 }

@@ -21,7 +21,7 @@ const tituloStyle: React.CSSProperties = {
   fontFamily: "'Nunito', sans-serif",
   fontWeight: 800,
   fontSize: 22,
-  color: C.ink,
+  color: C.text,
   lineHeight: 1.25,
   marginBottom: 6,
 };
@@ -83,9 +83,9 @@ function Bolha({ from, children }: { from: "eu" | "ia"; children: React.ReactNod
       <div
         style={{
           maxWidth: "78%",
-          background: eu ? C.sea : "#fff",
-          color: eu ? "#fff" : C.ink,
-          border: eu ? "none" : `2px solid ${C.paper2}`,
+          background: eu ? C.sea : C.card2,
+          color: eu ? "#fff" : C.text,
+          border: eu ? "none" : `1px solid ${C.line}`,
           borderRadius: 18,
           borderBottomRightRadius: eu ? 4 : 18,
           borderBottomLeftRadius: eu ? 18 : 4,
@@ -175,7 +175,7 @@ export function Simulador({ step, onAdvance }: { step: Extract<Step, { kind: "si
         {pensando && (
           <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
             <div style={{ width: 30, height: 30, borderRadius: "50%", background: C.seaLight, border: `2px solid ${C.sea}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>🦜</div>
-            <div style={{ background: "#fff", border: `2px solid ${C.paper2}`, borderRadius: 18, borderBottomLeftRadius: 4, padding: "12px 16px" }}><Pensando /></div>
+            <div style={{ background: C.card2, border: `1px solid ${C.line}`, borderRadius: 18, borderBottomLeftRadius: 4, padding: "12px 16px" }}><Pensando /></div>
           </div>
         )}
         <div ref={fimRef} />
@@ -190,14 +190,14 @@ export function Simulador({ step, onAdvance }: { step: Extract<Step, { kind: "si
             onClick={() => enviar(i)}
             className="clay"
             style={{
-              background: usados.has(i) ? C.paper2 : "#fff",
-              color: C.ink,
+              background: usados.has(i) ? C.paper2 : C.card2,
+              color: C.text,
               opacity: usados.has(i) ? 0.55 : 1,
               textAlign: "left",
               padding: "13px 15px",
               fontSize: 15,
               fontWeight: 700,
-              border: `2px solid ${p.bom ? C.green : C.paper2}`,
+              border: `1px solid ${p.bom ? C.green : C.line}`,
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -254,7 +254,7 @@ export function Dial({ step, onAdvance }: { step: Extract<Step, { kind: "dial" }
       <p style={subStyle}>{step.instrucao}</p>
 
       {/* mostrador */}
-      <div style={{ background: "#fff", border: `2px solid ${C.paper2}`, borderRadius: 18, padding: "18px 18px 20px", marginBottom: 16, boxShadow: "0 4px 0 0 rgba(0,0,0,0.05)" }}>
+      <div style={{ background: C.card2, border: `1px solid ${C.line}`, borderRadius: 18, padding: "18px 18px 20px", marginBottom: 16, boxShadow: "0 8px 24px -12px rgba(0,0,0,0.7)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
           <span style={{ fontFamily: "'Nunito',sans-serif", fontWeight: 900, fontSize: 18, color: C.brass }}>{nivel.rotulo}</span>
           {/* barrinha de qualidade */}
@@ -271,7 +271,7 @@ export function Dial({ step, onAdvance }: { step: Extract<Step, { kind: "dial" }
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.2 }}
-            style={{ fontFamily: "'Nunito',sans-serif", fontSize: 15.5, fontWeight: 600, color: C.ink, lineHeight: 1.5, margin: 0, minHeight: 66 }}
+            style={{ fontFamily: "'Nunito',sans-serif", fontSize: 15.5, fontWeight: 600, color: C.text, lineHeight: 1.5, margin: 0, minHeight: 66 }}
           >
             {nivel.resposta}
           </motion.p>
@@ -366,7 +366,7 @@ export function Construir({ step, onResponder, locked }: { step: Extract<Step, {
                 key={i}
                 onClick={() => !locked && setSeq([...seq, i])}
                 className="clay"
-                style={{ background: "#fff", color: C.ink, padding: "9px 13px", fontSize: 14, fontWeight: 800, border: `2px solid ${b.cor ?? BLOCO_CORES[i % BLOCO_CORES.length]}`, boxShadow: "0 3px 0 0 rgba(0,0,0,0.1)" }}
+                style={{ background: C.card2, color: C.text, padding: "9px 13px", fontSize: 14, fontWeight: 800, border: `2px solid ${b.cor ?? BLOCO_CORES[i % BLOCO_CORES.length]}`, boxShadow: "0 3px 0 0 rgba(0,0,0,0.1)" }}
               >
                 <span style={{ color: b.cor ?? BLOCO_CORES[i % BLOCO_CORES.length], fontSize: 11, display: "block", letterSpacing: "0.04em" }}>{b.etiqueta}</span>
                 {b.texto}
@@ -424,7 +424,7 @@ export function Caca({ step, onResponder, locked }: { step: Extract<Step, { kind
           <Bolha from="eu">{step.contexto}</Bolha>
         </div>
       )}
-      <div style={{ background: "#fff", border: `2px solid ${C.paper2}`, borderRadius: 18, padding: "16px 16px", lineHeight: 2.1 }}>
+      <div style={{ background: C.card2, border: `1px solid ${C.line}`, borderRadius: 18, padding: "16px 16px", lineHeight: 2.1 }}>
         <span style={{ fontSize: 18, marginRight: 4 }}>🦜</span>
         {step.pedacos.map((p, i) => {
           const ok = achou === i;
@@ -438,8 +438,8 @@ export function Caca({ step, onResponder, locked }: { step: Extract<Step, { kind
                 fontFamily: "'Nunito',sans-serif",
                 fontSize: 16,
                 fontWeight: ok ? 800 : 600,
-                color: ok ? "#fff" : C.ink,
-                background: ok ? "#E2574C" : bad ? "#FCE9E7" : "transparent",
+                color: ok ? "#0A0B0D" : C.text,
+                background: ok ? C.coral : bad ? "rgba(248,113,113,0.18)" : "transparent",
                 borderRadius: 6,
                 padding: "2px 3px",
                 cursor: locked || achou !== null ? "default" : "pointer",
@@ -496,7 +496,7 @@ export function SwarmViz({ step, onAdvance }: { step: Extract<Step, { kind: "swa
               style={{ display: "flex", alignItems: "center", gap: 10 }}
             >
               <span style={{ fontSize: 22, filter: feito ? "none" : ativo ? "none" : "grayscale(0.6) opacity(0.5)" }}>⛵</span>
-              <div style={{ flex: 1, background: feito ? "#E4F4EC" : "#fff", border: `2px solid ${feito ? C.green : ativo ? C.brass : C.paper2}`, borderRadius: 12, padding: "9px 12px", fontFamily: "'Nunito',sans-serif", fontWeight: 700, fontSize: 14, color: C.ink, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ flex: 1, background: feito ? "rgba(74,222,128,0.14)" : C.card2, border: `1px solid ${feito ? C.green : ativo ? C.brass : C.line}`, borderRadius: 12, padding: "9px 12px", fontFamily: "'Nunito',sans-serif", fontWeight: 700, fontSize: 14, color: C.text, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span>{t}</span>
                 {feito ? <span style={{ color: C.green, fontWeight: 900 }}>✓</span> : ativo ? <Pensando /> : <span style={{ color: C.textMuted, fontSize: 12 }}>aguardando…</span>}
               </div>

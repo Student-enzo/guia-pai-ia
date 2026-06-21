@@ -133,14 +133,14 @@ export function Mascote({
         <div
           style={{
             position: "relative",
-            background: "#fff",
-            border: `2px solid ${C.paper2}`,
+            background: C.card2,
+            border: `1px solid ${C.line}`,
             borderRadius: 16,
             padding: "12px 16px",
             fontFamily: "'Nunito', sans-serif",
             fontSize: 16,
             fontWeight: 700,
-            color: C.ink,
+            color: C.text,
             boxShadow: "0 4px 0 0 rgba(0,0,0,0.06)",
             maxWidth: 280,
           }}
@@ -155,7 +155,7 @@ export function Mascote({
               height: 0,
               borderTop: "7px solid transparent",
               borderBottom: "7px solid transparent",
-              borderRight: `9px solid #fff`,
+              borderRight: `9px solid ${C.card2}`,
             }}
           />
         </div>

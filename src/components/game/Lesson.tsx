@@ -88,11 +88,11 @@ export function Lesson({
             display: "flex",
             alignItems: "center",
             gap: 12,
-            background: "#fff",
+            background: C.card,
             borderRadius: 999,
             padding: "9px 14px",
-            boxShadow: "0 8px 22px -10px rgba(20,58,94,0.4)",
-            border: "1px solid #E2EEF7",
+            boxShadow: "0 10px 26px -12px rgba(0,0,0,0.7)",
+            border: `1px solid ${C.line}`,
           }}
         >
           <Link href="/" style={{ fontSize: 20, color: C.textMuted, textDecoration: "none", fontWeight: 900, lineHeight: 1 }} aria-label="Sair">
@@ -133,8 +133,10 @@ export function Lesson({
               left: 0,
               right: 0,
               zIndex: 40,
-              background: fb.ok ? "#E4F4EC" : "#FCE9E7",
-              borderTop: `3px solid ${fb.ok ? C.green : "#E2574C"}`,
+              background: fb.ok ? "rgba(74,222,128,0.12)" : "rgba(248,113,113,0.12)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
+              borderTop: `3px solid ${fb.ok ? C.green : C.coral}`,
               padding: "18px 22px 26px",
             }}
           >
@@ -146,13 +148,13 @@ export function Lesson({
                     fontFamily: "'Nunito', sans-serif",
                     fontWeight: 900,
                     fontSize: 19,
-                    color: fb.ok ? C.greenDeep : "#B33A30",
+                    color: fb.ok ? C.green : C.coral,
                   }}
                 >
                   {fb.ok ? "Boa, capitão!" : "Ó o Ô!"}
                 </span>
               </div>
-              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16, fontWeight: 600, color: C.ink, margin: "0 0 14px", lineHeight: 1.45 }}>
+              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: 16, fontWeight: 600, color: C.text, margin: "0 0 14px", lineHeight: 1.45 }}>
                 {fb.comentario}
               </p>
               <ChunkyButton full cor={fb.ok ? C.green : "#E2574C"} onClick={avancar}>
