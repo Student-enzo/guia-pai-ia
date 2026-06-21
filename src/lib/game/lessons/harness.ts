@@ -95,6 +95,19 @@ export const harness: Step[] = [
     sucesso: "Isso é o harness: ele pede, faz e ensina — tudo de uma vez.",
   },
   {
+    kind: "praticar",
+    titulo: "Ative o Prompt Mágico agora",
+    intro:
+      "Vamos transformar a IA na sua professora particular. É colar uma vez só.",
+    passos: [
+      "Abra uma conversa NOVA no ChatGPT ou Claude.",
+      "Copie o Prompt Mágico do baú acima e cole como a PRIMEIRA mensagem.",
+      "Mande. A partir daí, é só dizer o que você quer, do seu jeito.",
+      "Teste: peça 'me ajuda a responder um cliente sobre o passeio de domingo'.",
+    ],
+    fechamento: "Pronto — agora ela te ensina, faz e explica. Pra sempre.",
+  },
+  {
     kind: "premio",
     emoji: "🏆",
     titulo: "Você desenterrou o Baú!",

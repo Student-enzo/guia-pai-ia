@@ -115,6 +115,19 @@ export const mcps: Step[] = [
       "É MITO, capitão! São a mesma coisa — connector é só o MCP em versão de 1 clique. O nome assusta, mas é só um cabo que não enferruja. 😄",
   },
   {
+    kind: "praticar",
+    titulo: "Ligue o Gmail (só leitura) hoje",
+    intro:
+      "Sem pressa e seguro: a IA vai só OLHAR seus emails, não mexer em nada.",
+    passos: [
+      "No ChatGPT ou Claude, ache o ícone '+' ou 'Connectors' perto da caixa de escrever.",
+      "Escolha o Gmail e autorize — comece na opção 'somente leitura'.",
+      "Peça: 'tem algum email de cliente sobre passeio essa semana?'",
+      "Veja ela buscar e resumir. Você confere tudo antes de qualquer resposta.",
+    ],
+    fechamento: "Ela virou seu imediato de bordo — começando pela observação.",
+  },
+  {
     kind: "premio",
     emoji: "🔌",
     titulo: "Você ganhou o Cabo Universal!",

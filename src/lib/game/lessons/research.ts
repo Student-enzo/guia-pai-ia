@@ -117,6 +117,19 @@ Me entregue no final:
 Regra importante: NÃO invente números (preço, receita, quantidade). Se não tiver certeza, diga que não tem certeza e mostre de onde tirou cada dado.`,
   },
   {
+    kind: "praticar",
+    titulo: "Rode uma Pesquisa Profunda de verdade",
+    intro:
+      "Vamos mapear seus concorrentes — decisão de dinheiro merece o canhão.",
+    passos: [
+      "No ChatGPT ou Claude, ligue o 'Deep Research' (botão) ou escreva /deep-research.",
+      "Cole o prompt do tesouro acima e troque [MINHA REGIÃO] pela sua.",
+      "Mande e espere — ela lê dezenas de fontes (leva uns minutos).",
+      "Abra pelo menos UMA fonte que ela citar pra conferir. Confiança não é prova.",
+    ],
+    fechamento: "Relatório do mercado na mão — com fontes. Decisão de capitão.",
+  },
+  {
     kind: "premio",
     emoji: "🔍",
     titulo: "Você ganhou a Luneta de Pesquisa!",

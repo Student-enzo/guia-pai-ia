@@ -116,6 +116,18 @@ export const skills: Step[] = [
       "Cuidado! /godmode e parecidos são lenda da internet, não existem de verdade. A fonte confiável é só uma: o /help.",
   },
   {
+    kind: "praticar",
+    titulo: "Explore o menu de comandos /",
+    intro: "Vamos abrir o baú de superpoderes — é só digitar uma barra.",
+    passos: [
+      "Abra o ChatGPT ou Claude.",
+      "Na caixa de escrever, digite só uma barra: /",
+      "Veja o menu de comandos aparecer. Role e leia os nomes.",
+      "Toque no /help pra ver tudo que existe de verdade.",
+    ],
+    fechamento: "Você nunca precisa decorar — é só digitar / e espiar.",
+  },
+  {
     kind: "premio",
     emoji: "🗝️",
     titulo: "Você ganhou a Chave dos Atalhos!",
