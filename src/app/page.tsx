@@ -202,9 +202,9 @@ function Ritmo() {
             {CONCEITOS.map((c, i) => (
               <Reveal key={i} delay={i * 0.04}>
                 <div className="card-ayc" style={{ overflow: "hidden", borderLeft: `4px solid ${ACCENT[c.cor]}` }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.6fr)", gap: 0 }}>
+                  <div className="split-2 concept">
                     {/* Left visual panel — ilustração gerada */}
-                    <div style={{ position: "relative", borderRight: `1px solid ${C.line}`, minHeight: 240, overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                    <div className="concept-left" style={{ position: "relative", borderRight: `1px solid ${C.line}`, minHeight: 240, overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
                       <img src={CONCEPT_IMG[c.cor]} alt="" aria-hidden style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
                       <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, rgba(14,16,20,0.05) 25%, rgba(14,16,20,0.55) 62%, rgba(14,16,20,0.94) 100%)` }} />
                       <div style={{ position: "relative", padding: "20px 22px" }}>
@@ -549,7 +549,7 @@ function MasterPromptVivo() {
         </Reveal>
 
         <Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.3fr)", gap: 16, alignItems: "start" }}>
+          <div className="split-2 io">
             {/* Inputs */}
             <div className="card-ayc" style={{ padding: "22px 22px" }}>
               <label style={{ display: "block", marginBottom: modo === "decisao" ? 16 : 0 }}>
@@ -896,8 +896,8 @@ function Slash() {
             </div>
 
             {/* command list + detail panel */}
-            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.4fr)", gap: 0 }}>
-              <div style={{ borderRight: `1px solid ${C.line}`, padding: 10, display: "flex", flexDirection: "column", gap: 4, maxHeight: 340, overflowY: "auto" }}>
+            <div className="split-2 term">
+              <div className="term-list" style={{ borderRight: `1px solid ${C.line}`, padding: 10, display: "flex", flexDirection: "column", gap: 4, maxHeight: 340, overflowY: "auto" }}>
                 {filtered.map((c, i) => (
                   <button key={c.cmd} onClick={() => setSel(i)}
                     style={{ textAlign: "left", padding: "9px 12px", borderRadius: 8, cursor: "pointer", background: i === safeIdx ? "rgba(144,196,207,0.12)" : "transparent", border: `1px solid ${i === safeIdx ? "rgba(144,196,207,0.3)" : "transparent"}`, color: i === safeIdx ? C.sea : C.text, fontFamily: "ui-monospace, Menlo, monospace", fontSize: 13, fontWeight: 600, transition: "background 150ms" }}>
@@ -1144,6 +1144,7 @@ function Mapa() {
               return (
                 <motion.button
                   key={x.meta.slug}
+                  className="map-node"
                   onClick={() => setSel(x.i)}
                   initial={{ opacity: 0, scale: 0.4, y: 8 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}

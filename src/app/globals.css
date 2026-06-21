@@ -329,3 +329,30 @@ body {
   .card-lift:hover { transform: none; }
   .clay:active:not(:disabled) { transform: none; }
 }
+
+/* ════════════ RESPONSIVO (mobile) — desktop fica idêntico ════════════ */
+/* Grades de 2 colunas que viram 1 coluna no celular */
+.split-2 { display: grid; }
+.split-2.io      { grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 16px; align-items: start; }
+.split-2.term    { grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); }
+.split-2.concept { grid-template-columns: minmax(0,1fr) minmax(0,1.6fr); }
+
+@media (max-width: 768px) {
+  .split-2.io,
+  .split-2.term,
+  .split-2.concept { grid-template-columns: 1fr; }
+
+  /* o painel esquerdo do conceito vira topo: troca borda lateral por inferior */
+  .concept-left { border-right: 0 !important; border-bottom: 1px solid var(--ink-line); min-height: 150px !important; }
+
+  /* lista de comandos do terminal: borda embaixo quando empilha */
+  .term-list { border-right: 0 !important; border-bottom: 1px solid var(--ink-line); max-height: 200px !important; }
+
+  /* nós do mapa um tiquinho menores no celular */
+  .map-node { width: 44px !important; height: 44px !important; font-size: 18px !important; }
+}
+
+/* telas bem pequenas: aperta paddings e fontes */
+@media (max-width: 420px) {
+  .sec-pad { padding-left: 16px !important; padding-right: 16px !important; }
+}
