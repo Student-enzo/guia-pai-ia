@@ -8,8 +8,10 @@ import { C, PAI } from "@/lib/config";
 import { useProgress } from "@/lib/progress";
 import { MODULOS, ModMeta } from "@/lib/moduleMeta";
 import { useDadJoke } from "@/lib/fun";
+import { useState } from "react";
 import { NEWS, NewsItem } from "@/lib/news";
 import { NUGGETS } from "@/lib/nuggets";
+import { SLASHES } from "@/lib/slash";
 
 const ACCENT: Record<NewsItem["cor"], string> = {
   teal: C.sea,
@@ -43,6 +45,7 @@ export default function Home() {
       <Hero />
       <Ritmo />
       <Nuggets />
+      <Slash />
       <Mapa />
       <Climax />
       <Rodape />
@@ -181,6 +184,64 @@ function Nuggets() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+// ───────────────────────── COMANDOS "/" (terminal) ─────────────────────────
+function Slash() {
+  const [sel, setSel] = useState(0);
+  const s = SLASHES[sel];
+  return (
+    <section style={{ padding: "20px 0 72px" }}>
+      <hr className="contour-divider" style={{ ...wrap, marginBottom: 60, border: 0 }} />
+      <div style={wrap}>
+        <SectionHead kicker="o baú de superpoderes" titulo="Comandos com a barra /" sub="Digite uma barra na IA e um menu de superpoderes aparece. Você só precisa de uns poucos — toque pra ver." />
+        <Reveal>
+          <div className="card-ayc" style={{ overflow: "hidden", maxWidth: 860, margin: "0 auto" }}>
+            {/* barra do terminal */}
+            <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "12px 16px", borderBottom: `1px solid ${C.line}`, background: "#101216" }}>
+              <span style={{ width: 11, height: 11, borderRadius: "50%", background: C.coral }} />
+              <span style={{ width: 11, height: 11, borderRadius: "50%", background: C.brass }} />
+              <span style={{ width: 11, height: 11, borderRadius: "50%", background: C.green }} />
+              <span className="label-caps" style={{ marginLeft: 8, color: C.textMuted }}>guia-de-ia — terminal</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.2fr)", gap: 0 }}>
+              {/* lista de comandos */}
+              <div style={{ borderRight: `1px solid ${C.line}`, padding: 10, display: "flex", flexDirection: "column", gap: 4 }}>
+                {SLASHES.map((c, i) => (
+                  <button key={c.cmd} onClick={() => setSel(i)} style={{
+                    textAlign: "left", padding: "10px 12px", borderRadius: 10, cursor: "pointer",
+                    background: i === sel ? "rgba(144,196,207,0.12)" : "transparent",
+                    border: `1px solid ${i === sel ? "rgba(144,196,207,0.3)" : "transparent"}`,
+                    color: i === sel ? C.sea : C.text,
+                    fontFamily: "ui-monospace, Menlo, monospace", fontSize: 14, fontWeight: 600, transition: "background 150ms",
+                  }}>
+                    {c.cmd}
+                  </button>
+                ))}
+              </div>
+              {/* saída */}
+              <div style={{ padding: "18px 18px", fontFamily: "ui-monospace, Menlo, monospace", minHeight: 200 }}>
+                <div style={{ color: C.green, fontSize: 14, marginBottom: 10 }}>
+                  <span style={{ color: C.textMuted }}>capitão@bordo $</span> {s.cmd}
+                </div>
+                <motion.p key={sel} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}
+                  style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 15, color: C.text, lineHeight: 1.55, margin: "0 0 14px" }}>
+                  {s.oQueFaz}
+                </motion.p>
+                <motion.div key={`o${sel}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
+                  style={{ fontSize: 13.5, color: C.seaLight, background: "#0A0B0D", border: `1px solid ${C.line}`, borderRadius: 10, padding: "11px 13px", lineHeight: 1.5 }}>
+                  {s.saida}
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+        <p className="font-body" style={{ textAlign: "center", color: C.textMuted, fontSize: 13.5, marginTop: 16 }}>
+          🦜 Dica do Loro: na dúvida, digite <b style={{ color: C.sea }}>/help</b> — ele te mostra o mapa inteiro.
+        </p>
       </div>
     </section>
   );
