@@ -116,6 +116,16 @@ export type Step =
       respostaForte: string; // resposta ao pedido completo
       sucesso: string;
     }
+  // PRATICAR — "Faça Agora": camada de IMPLEMENTAÇÃO. Passo a passo que o pai
+  // faz DE VERDADE no app de IA dele, com checklist e prompt pra copiar.
+  | {
+      kind: "praticar";
+      titulo: string;
+      intro: string;
+      passos: string[]; // cada passo é uma ação real (toca pra marcar feito)
+      prompt?: string; // prompt pronto pra copiar e colar
+      fechamento: string;
+    }
   // Recompensa / fim de mini-sessão (cartão de baú)
   | {
       kind: "premio";
@@ -146,6 +156,7 @@ const NAO_JOGAVEIS = new Set<StepKind>([
   "simulador",
   "dial",
   "swarm",
+  "praticar",
 ]);
 
 /** true se o passo vale ponto/erro (entra no placar e na barra de progresso). */

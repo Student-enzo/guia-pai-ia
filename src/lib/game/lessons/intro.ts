@@ -81,6 +81,21 @@ export const intro: Step[] = [
       "É VERDADE, viu? A IA corre absurdamente rápido. Por isso focamos em habilidade, não em decorar botão.",
   },
   {
+    kind: "praticar",
+    titulo: "Sua primeira conversa com a IA",
+    intro:
+      "Chega de teoria — bora fazer de verdade, capitão. Leva 2 minutos. Eu espero aqui. 🦜",
+    passos: [
+      "Abra o ChatGPT (chatgpt.com) ou o Claude (claude.ai) no celular ou no computador.",
+      "Toque na caixa de escrever, lá embaixo.",
+      "Cole o pedido abaixo e mande (aperte Enter ou a setinha).",
+      "Leia a resposta. Pronto — você acabou de usar IA. 🎉",
+    ],
+    prompt:
+      "Você é um assistente simpático. Me explique, em 3 frases curtas e simples, o que você consegue fazer por um dono de negócio de passeios de barco. Sem termos técnicos.",
+    fechamento: "Viu como é fácil? É só conversar.",
+  },
+  {
     kind: "premio",
     emoji: "🧭",
     titulo: "Você ganhou a Bússola!",

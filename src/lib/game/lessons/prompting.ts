@@ -97,6 +97,21 @@ export const prompting: Step[] = [
       "Você é meu assistente do meu negócio de charter de barcos.\nResponda este hóspede: [cole a mensagem dele].\nObjetivo: [confirmar / remarcar / agradecer].\nTom: caloroso e profissional. Formato: mensagem curta de WhatsApp.\nNão invente preço nem prometa o que eu não disse.",
   },
   {
+    kind: "praticar",
+    titulo: "Escreva um email de verdade com IA",
+    intro:
+      "Agora você monta um pedido de verdade e deixa a IA escrever pra você. Vale pra qualquer cliente seu.",
+    passos: [
+      "Abra o ChatGPT ou o Claude.",
+      "Cole o pedido abaixo — e troque o que está [entre colchetes] pela sua situação.",
+      "Mande. Leia o email que ela escreveu.",
+      "Não gostou de algo? Responda: 'deixa mais curto' ou 'mais formal'. Ela refaz.",
+    ],
+    prompt:
+      "Você é meu assistente do meu negócio de charter de barcos.\nEscreva um email curto e caloroso confirmando a reserva de [NOME DO CLIENTE] para o passeio de [DIA] às [HORA].\nNão invente preço. Tom amigável e profissional.",
+    fechamento: "Esse email saiu pronto pra mandar. Capitão que delega! ⚓",
+  },
+  {
     kind: "premio",
     emoji: "🧾",
     titulo: "Você ganhou a Receita de Ouro!",

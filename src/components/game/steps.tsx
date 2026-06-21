@@ -50,7 +50,61 @@ export function StepView({
       return <SwarmViz step={step} onAdvance={onAdvance} />;
     case "transforma":
       return <Transforma step={step} onResponder={onResponder} locked={locked} />;
+    case "praticar":
+      return <Praticar step={step} onAdvance={onAdvance} />;
   }
+}
+
+// ── PRATICAR (Faça Agora — camada de implementação) ──
+function Praticar({ step, onAdvance }: { step: Extract<Step, { kind: "praticar" }>; onAdvance: () => void }) {
+  const [feitos, setFeitos] = useState<Set<number>>(new Set());
+  const toggle = (i: number) =>
+    setFeitos((s) => {
+      const n = new Set(s);
+      if (n.has(i)) n.delete(i);
+      else n.add(i);
+      return n;
+    });
+  const todos = feitos.size === step.passos.length;
+  return (
+    <div>
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(74,222,128,0.1)", border: `1px solid rgba(74,222,128,0.28)`, borderRadius: 999, padding: "5px 12px", marginBottom: 12 }}>
+        <span style={{ width: 7, height: 7, borderRadius: "50%", background: C.green }} />
+        <span className="label-caps" style={{ color: C.green }}>Faça agora · de verdade</span>
+      </div>
+      <h3 style={tituloStyle}>{step.titulo}</h3>
+      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 15.5, color: C.textMuted, lineHeight: 1.55, margin: "0 0 18px" }}>{step.intro}</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: step.prompt ? 16 : 22 }}>
+        {step.passos.map((p, i) => {
+          const ok = feitos.has(i);
+          return (
+            <button key={i} onClick={() => toggle(i)} style={{
+              display: "flex", alignItems: "flex-start", gap: 12, textAlign: "left", cursor: "pointer",
+              background: ok ? "rgba(74,222,128,0.08)" : C.card2, border: `1px solid ${ok ? "rgba(74,222,128,0.3)" : C.line}`,
+              borderRadius: 12, padding: "13px 14px", transition: "background 150ms",
+            }}>
+              <span style={{
+                flexShrink: 0, width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                background: ok ? C.green : "transparent", border: `2px solid ${ok ? C.green : C.textMuted}`,
+                color: "#0A0B0D", fontSize: 13, fontWeight: 900, marginTop: 1,
+              }}>{ok ? "✓" : i + 1}</span>
+              <span style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 15, fontWeight: 600, color: ok ? C.textMuted : C.text, lineHeight: 1.5, textDecoration: ok ? "line-through" : "none" }}>{p}</span>
+            </button>
+          );
+        })}
+      </div>
+      {step.prompt && (
+        <div style={{ background: "#08090B", borderRadius: 14, padding: "14px 14px 12px", border: `1px solid ${C.line}`, marginBottom: 22 }}>
+          <span className="label-caps" style={{ color: C.seaDeep }}>Cole isto na IA</span>
+          <pre style={{ color: C.seaLight, fontFamily: "ui-monospace, Menlo, monospace", fontSize: 12.5, lineHeight: 1.55, whiteSpace: "pre-wrap", wordBreak: "break-word", margin: "8px 0 12px" }}>{step.prompt}</pre>
+          <CopyButton text={step.prompt} label="Copiar pra usar" />
+        </div>
+      )}
+      <ChunkyButton full cor={todos ? C.green : C.sea} onClick={onAdvance}>
+        {todos ? "Feito! Mandei ver 🎉" : "Já fiz / faço depois →"}
+      </ChunkyButton>
+    </div>
+  );
 }
 
 const tituloStyle: React.CSSProperties = {
