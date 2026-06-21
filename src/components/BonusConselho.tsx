@@ -171,7 +171,7 @@ export function BonusConselho() {
           </div>
 
           <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: 14, padding: 4 }}>
-            <Desafio id="bonus:conselho" onComplete={dispararConfete}>
+            <Desafio id="conselho:mestre" onComplete={dispararConfete}>
               <span style={{ color: "#E8E4DC" }}>
                 <b style={{ color: C.brassLight }}>Desafio de mestre 🏆</b>
                 <br />

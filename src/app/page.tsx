@@ -1,95 +1,59 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { C, PAI } from "@/lib/config";
-import { ProgressProvider, useProgress } from "@/lib/progress";
-import { ModIntro } from "@/components/ModIntro";
-import { ModPrompting } from "@/components/ModPrompting";
-import { ModMetaprompt } from "@/components/ModMetaprompt";
-import { ModHarness } from "@/components/ModHarness";
-import { BonusConselho } from "@/components/BonusConselho";
-import { ModSkills } from "@/components/ModSkills";
-import { ModMcps } from "@/components/ModMcps";
-import { ModResearch } from "@/components/ModResearch";
-import { ModBastidores } from "@/components/ModBastidores";
-import { ModDiploma } from "@/components/ModDiploma";
+import { IMG } from "@/lib/images";
+import { useProgress } from "@/lib/progress";
+import { MODULOS, ModMeta } from "@/lib/moduleMeta";
+import { useDadJoke } from "@/lib/fun";
 
-const TOTAL_DESAFIOS = 13; // 12 módulos + 1 desafio bônus (Conselho)
-
-export default function Page() {
+export default function Home() {
   return (
-    <ProgressProvider>
-      <BarraTopo />
+    <>
       <Hero />
-      <ModIntro />
-      <ModPrompting />
-      <ModMetaprompt />
-      <ModHarness />
-      <BonusConselho />
-      <ModSkills />
-      <ModMcps />
-      <ModResearch />
-      <ModBastidores />
-      <ModDiploma />
+      <Mapa />
       <Rodape />
-    </ProgressProvider>
+    </>
   );
 }
 
-// ── Barra de progresso fixa no topo ──
-function BarraTopo() {
-  const { totalDone } = useProgress();
-  const pct = Math.min(100, Math.round((totalDone / TOTAL_DESAFIOS) * 100));
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        height: 6,
-        background: C.paper2,
-      }}
-    >
-      <motion.div
-        animate={{ width: `${pct}%` }}
-        transition={{ type: "spring", stiffness: 120, damping: 20 }}
-        style={{ height: "100%", background: C.brass }}
-      />
-    </div>
-  );
-}
-
-// ── Hero ──
+// ───────────────────────── HERO ─────────────────────────
 function Hero() {
+  const { totalDone } = useProgress();
+  const router = useRouter();
+  const primeiro = useFirstIncomplete();
+
   return (
     <header
-      className="hero-photo"
       style={{
-        minHeight: "82vh",
+        position: "relative",
+        minHeight: "88vh",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "80px 22px 60px",
-        position: "relative",
+        padding: "60px 22px",
+        backgroundImage: `linear-gradient(180deg, rgba(15,32,64,0.55), rgba(15,32,64,0.8)), url(${IMG.hero})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
+        transition={{ duration: 0.8 }}
+        style={{ maxWidth: 640 }}
       >
         <div
           className="tracking-luxe"
           style={{
             fontFamily: "'Cinzel', serif",
             fontSize: 13,
-            color: "#F1EEE7",
+            color: "#D9E2EF",
             letterSpacing: "0.3em",
-            marginBottom: 22,
+            marginBottom: 20,
           }}
         >
           FELIZ DIA DOS PAIS
@@ -97,57 +61,308 @@ function Hero() {
         <h1
           style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: "clamp(40px, 9vw, 86px)",
+            fontSize: "clamp(42px, 9vw, 88px)",
             fontWeight: 600,
-            color: "#FFFFFF",
+            color: "#fff",
             lineHeight: 1.02,
             margin: "0 0 18px",
-            textShadow: "0 2px 30px rgba(0,0,0,0.35)",
+            textShadow: "0 2px 30px rgba(0,0,0,0.4)",
           }}
         >
-          IA do Zero
+          A Jornada da IA
           <br />
           <span style={{ fontFamily: "'Pinyon Script', cursive", fontWeight: 400 }}>
-            pra Você, Capitão {PAI.primeiroNome}
+            do Capitão {PAI.primeiroNome}
           </span>
         </h1>
         <p
           style={{
             fontSize: 19,
-            color: "#F1EEE7",
-            maxWidth: 560,
-            margin: "0 auto 36px",
+            color: "#E6ECF4",
+            maxWidth: 520,
+            margin: "0 auto 34px",
             lineHeight: 1.6,
-            textShadow: "0 1px 12px rgba(0,0,0,0.4)",
+            textShadow: "0 1px 12px rgba(0,0,0,0.5)",
           }}
         >
-          Um curso curto, divertido e sem enrolação pra você aprender a usar Inteligência
-          Artificial — mesmo nunca tendo mexido nisso. Sem pressa, no seu ritmo. ⛵
+          Aprender Inteligência Artificial do zero, no seu ritmo — como navegar de
+          uma ilha pra outra. Cada parada destrava a próxima. ⛵
         </p>
-        <motion.a
-          href="#harness"
+        <motion.button
+          onClick={() => router.push(`/modulo/${primeiro}`)}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
           style={{
-            display: "inline-block",
             background: C.brass,
             color: "#fff",
-            padding: "16px 38px",
+            border: "none",
+            padding: "16px 40px",
             borderRadius: 999,
             fontSize: 16,
             fontWeight: 600,
             letterSpacing: "0.04em",
-            textDecoration: "none",
-            boxShadow: "0 12px 30px rgba(0,0,0,0.3)",
+            cursor: "pointer",
+            boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
           }}
         >
-          Começar a aventura →
-        </motion.a>
+          {totalDone > 0 ? "Continuar a viagem →" : "Zarpar →"}
+        </motion.button>
+        <div style={{ marginTop: 18, fontSize: 14, color: "#C2CEDD" }}>
+          ⭐ {totalDone} de {MODULOS.reduce((a, m) => a + m.desafios, 0)} conquistas
+        </div>
       </motion.div>
+      <a
+        href="#mapa"
+        style={{
+          position: "absolute",
+          bottom: 22,
+          color: "#fff",
+          fontSize: 26,
+          textDecoration: "none",
+          opacity: 0.8,
+        }}
+        aria-label="Ver o mapa"
+      >
+        ↓
+      </a>
     </header>
   );
 }
 
+// ───────────────────────── MAPA ─────────────────────────
+function Mapa() {
+  const { provocar, node } = useDadJoke();
+  const atual = useFirstIncomplete();
+
+  return (
+    <section
+      id="mapa"
+      style={{
+        background: C.paper,
+        padding: "70px 0 90px",
+        backgroundImage: `linear-gradient(${C.paper}, ${C.paper2})`,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 50, padding: "0 22px" }}>
+        <div
+          className="divider-emblem"
+          style={{ marginBottom: 18, color: C.seaDeep }}
+        >
+          <span style={{ fontSize: 20 }}>🗺️</span>
+        </div>
+        <h2
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(28px, 6vw, 44px)",
+            color: C.ink,
+            margin: 0,
+            fontWeight: 600,
+          }}
+        >
+          O Mapa da Viagem
+        </h2>
+        <p style={{ color: C.textMuted, fontSize: 17, marginTop: 6 }}>
+          Toque numa ilha pra começar. As trancadas abrem conforme você avança.
+        </p>
+      </div>
+
+      <div
+        style={{
+          position: "relative",
+          maxWidth: 560,
+          margin: "0 auto",
+          padding: "0 22px",
+        }}
+      >
+        {/* linha da rota (tracejada) */}
+        <div
+          style={{
+            position: "absolute",
+            top: 40,
+            bottom: 40,
+            left: "50%",
+            width: 0,
+            borderLeft: `3px dashed ${C.seaLight}`,
+            transform: "translateX(-50%)",
+            zIndex: 0,
+          }}
+        />
+        {MODULOS.map((m, i) => (
+          <No
+            key={m.slug}
+            meta={m}
+            lado={i % 2 === 0 ? "left" : "right"}
+            ehAtual={m.slug === atual}
+            onLocked={provocar}
+          />
+        ))}
+      </div>
+      {node}
+    </section>
+  );
+}
+
+function No({
+  meta,
+  lado,
+  ehAtual,
+  onLocked,
+}: {
+  meta: ModMeta;
+  lado: "left" | "right";
+  ehAtual: boolean;
+  onLocked: () => void;
+}) {
+  const { isModuleUnlocked, moduleProgress, ready } = useProgress();
+  const router = useRouter();
+
+  const unlocked =
+    !ready ||
+    meta.moduleId === "conselho" ||
+    isModuleUnlocked(meta.moduleId as never);
+  const feitos = moduleProgress(meta.moduleId as never, meta.desafios);
+  const done = feitos >= meta.desafios && ready;
+
+  const cor = done ? C.green : ehAtual ? C.brass : unlocked ? C.sea : "#B7C0CE";
+  const corFundo = done ? C.green : ehAtual ? C.brass : unlocked ? C.paper : "#E2E7EE";
+
+  const irPro = () => {
+    if (unlocked) router.push(`/modulo/${meta.slug}`);
+    else onLocked();
+  };
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        zIndex: 1,
+        display: "flex",
+        justifyContent: "center",
+        margin: "26px 0",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: lado === "left" ? "row" : "row-reverse",
+          alignItems: "center",
+          gap: 16,
+          width: "100%",
+          maxWidth: 460,
+        }}
+      >
+        {/* nó (círculo) */}
+        <motion.button
+          onClick={irPro}
+          whileHover={unlocked ? { scale: 1.08 } : { rotate: [0, -8, 8, -6, 0], x: [0, -6, 6, 0] }}
+          whileTap={unlocked ? { scale: 0.94 } : undefined}
+          style={{
+            flexShrink: 0,
+            width: 72,
+            height: 72,
+            borderRadius: "50%",
+            border: `4px solid ${cor}`,
+            background: corFundo,
+            color: done || ehAtual ? "#fff" : C.ink,
+            fontSize: 30,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: unlocked ? "pointer" : "not-allowed",
+            boxShadow: ehAtual
+              ? `0 0 0 6px rgba(176,137,79,0.25), 0 10px 24px rgba(0,0,0,0.18)`
+              : "0 8px 20px rgba(20,39,74,0.14)",
+            position: "relative",
+          }}
+        >
+          {done ? "✓" : unlocked ? meta.emoji : "🔒"}
+          {ehAtual && (
+            <span
+              className="pulse-dot"
+              style={{
+                position: "absolute",
+                inset: -4,
+                borderRadius: "50%",
+                border: `2px solid ${C.brass}`,
+              }}
+            />
+          )}
+        </motion.button>
+
+        {/* cartão de texto */}
+        <button
+          onClick={irPro}
+          style={{
+            flex: 1,
+            textAlign: lado === "left" ? "left" : "right",
+            background: "transparent",
+            border: "none",
+            cursor: unlocked ? "pointer" : "not-allowed",
+            padding: 0,
+          }}
+        >
+          {ehAtual && (
+            <span
+              style={{
+                display: "inline-block",
+                background: C.brass,
+                color: "#fff",
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                padding: "3px 9px",
+                borderRadius: 999,
+                marginBottom: 5,
+              }}
+            >
+              VOCÊ ESTÁ AQUI
+            </span>
+          )}
+          <div
+            style={{
+              fontFamily: "'Cinzel', serif",
+              fontSize: 11,
+              letterSpacing: "0.14em",
+              color: meta.isBonus ? C.brass : C.textMuted,
+              marginBottom: 2,
+            }}
+          >
+            {meta.isBonus ? "★ BÔNUS" : `PARADA ${meta.num}`}
+          </div>
+          <div
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 22,
+              fontWeight: 600,
+              color: unlocked ? C.ink : "#9AA6B6",
+              lineHeight: 1.1,
+            }}
+          >
+            {meta.titulo}
+          </div>
+          <div style={{ fontSize: 13.5, color: C.textMuted, marginTop: 2 }}>
+            {unlocked ? meta.subtitulo : "🔒 Termine a parada anterior"}
+          </div>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// primeiro módulo não-concluído e desbloqueado (pra "você está aqui" e o CTA)
+function useFirstIncomplete(): string {
+  const { isModuleUnlocked, moduleProgress, ready } = useProgress();
+  if (!ready) return MODULOS[0].slug;
+  for (const m of MODULOS) {
+    const unlocked =
+      m.moduleId === "conselho" || isModuleUnlocked(m.moduleId as never);
+    const done = moduleProgress(m.moduleId as never, m.desafios) >= m.desafios;
+    if (unlocked && !done) return m.slug;
+  }
+  return MODULOS[MODULOS.length - 1].slug;
+}
+
+// ───────────────────────── RODAPÉ ─────────────────────────
 function Rodape() {
   return (
     <footer
@@ -155,22 +370,28 @@ function Rodape() {
         background: C.ink,
         color: C.onDark,
         textAlign: "center",
-        padding: "50px 22px",
+        padding: "54px 22px",
       }}
     >
       <p
         style={{
           fontFamily: "'Pinyon Script', cursive",
-          fontSize: 30,
+          fontSize: 32,
           margin: "0 0 8px",
           color: C.brassLight,
         }}
       >
         Feito com carinho
       </p>
-      <p style={{ fontSize: 14, color: "#A7AEA8", margin: 0 }}>
-        Feliz Dia dos Pais 🎁 — agora você fala a língua das máquinas.
+      <p style={{ fontSize: 14, color: "#A9B6C9", margin: "0 0 14px" }}>
+        Feliz Dia dos Pais, Capitão {PAI.primeiroNome} 🎁
       </p>
+      <Link
+        href="/modulo/intro"
+        style={{ color: C.seaLight, fontSize: 14, textDecoration: "none", fontWeight: 600 }}
+      >
+        Começar do início →
+      </Link>
     </footer>
   );
 }

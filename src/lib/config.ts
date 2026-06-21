@@ -12,18 +12,22 @@ export const PAI = {
   negocioCurto: "charter de barcos",
 };
 
-// 🎨 Paleta (espelha o globals.css — Atlantic Yacht Charter)
+// 🎨 Paleta — alinhada ao repo Atlantic Yacht Charter (navy + teal + verde-mar)
+// Navy + creme + brass = paleta clássica de yacht club.
 export const C = {
-  ink: "#242424",
-  inkSoft: "#2E2E2E",
-  paper: "#FBFAF7",
-  paper2: "#F1EEE7",
-  sea: "#6FA8AD",
+  ink: "#14274A", // navy profundo (nav, footer, bandas escuras) — antes charcoal
+  inkSoft: "#1C3F6E", // navy médio (gradientes)
+  navy: "#0F2040", // navy mais escuro
+  paper: "#FBFAF7", // creme quente (fundo principal)
+  paper2: "#EEF2F7", // azul-claro frio do AYC (bandas alternadas)
+  sea: "#6FA8AD", // teal accent
   seaDeep: "#4E868C",
-  seaLight: "#A9CDCF",
-  brass: "#B0894F",
+  seaLight: "#90C4CF", // teal claro do AYC
+  green: "#4A9B7F", // verde-mar do AYC — estado "concluído" (Duolingo)
+  greenDeep: "#3C7E66",
+  brass: "#B0894F", // dourado pros "golden nuggets" / XP
   brassLight: "#C9A56A",
-  text: "#242424",
-  textMuted: "#6B6B6B",
+  text: "#1A2A44", // navy bem escuro pro corpo (mais quente que preto)
+  textMuted: "#5C6B82",
   onDark: "#FBFAF7",
 };

@@ -2,19 +2,21 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Atlantic Yacht Charters palette (from atlanticyc.com) ── */
-  --ink:        #242424;  /* charcoal — nav, footer, dark bands */
-  --ink-soft:   #2E2E2E;
-  --ink-line:   #3A3A3A;
+  /* ── Atlantic Yacht Charter palette (from the AYC repo) — navy + teal + sea-green ── */
+  --ink:        #14274A;  /* navy — nav, footer, dark bands */
+  --ink-soft:   #1C3F6E;
+  --ink-line:   #2A4063;
+  --navy:       #0F2040;
   --paper:      #FBFAF7;  /* warm cream — main background */
-  --paper-2:    #F1EEE7;  /* deeper cream for alternating bands */
-  --sea:        #6FA8AD;  /* Caribbean teal accent */
+  --paper-2:    #EEF2F7;  /* cool light blue — alternating bands */
+  --sea:        #6FA8AD;  /* teal accent */
   --sea-deep:   #4E868C;
-  --sea-light:  #A9CDCF;
+  --sea-light:  #90C4CF;
+  --green:      #4A9B7F;  /* sea-green — "done" state */
   --brass:      #B0894F;  /* refined gold for "golden nuggets" */
   --brass-light:#C9A56A;
-  --text:       #242424;  /* dark text on cream */
-  --text-muted: #6B6B6B;
+  --text:       #1A2A44;  /* navy-dark text on cream */
+  --text-muted: #5C6B82;
   --on-dark:    #FBFAF7;  /* cream text on charcoal */
   --on-dark-muted: #A7AEA8;
 
@@ -95,8 +97,8 @@ body {
 /* ── Hero photographic overlay ── */
 .hero-photo {
   background:
-    linear-gradient(180deg, rgba(36,36,36,0.45) 0%, rgba(36,36,36,0.15) 40%, rgba(36,36,36,0.55) 100%),
-    radial-gradient(120% 80% at 50% 10%, #8FC3C4 0%, #6FA8AD 35%, #4E868C 70%, #2E5A60 100%);
+    linear-gradient(180deg, rgba(15,32,64,0.55) 0%, rgba(15,32,64,0.25) 40%, rgba(15,32,64,0.7) 100%),
+    radial-gradient(120% 90% at 50% 0%, #1C3F6E 0%, #14274A 45%, #0F2040 100%);
 }
 
 /* ── Brass top line for nugget cards ── */

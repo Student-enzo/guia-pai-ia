@@ -51,7 +51,7 @@ export function ModuleShell({
             MÓDULO {numero}
           </span>
           {completo && (
-            <span style={{ fontSize: 12, color: C.seaDeep, fontWeight: 600 }}>✓ Concluído</span>
+            <span style={{ fontSize: 12, color: C.green, fontWeight: 600 }}>✓ Concluído</span>
           )}
           {totalDesafios > 0 && !completo && (
             <span style={{ fontSize: 12, color: C.textMuted }}>
@@ -147,8 +147,8 @@ export function Desafio({
   return (
     <div
       style={{
-        background: done ? "#EAF2F1" : C.paper,
-        border: `2px solid ${done ? C.seaDeep : C.paper2}`,
+        background: done ? "#EAF4EF" : C.paper,
+        border: `2px solid ${done ? C.green : C.paper2}`,
         borderRadius: 16,
         padding: "22px 22px 20px",
         margin: "20px 0",
@@ -167,7 +167,7 @@ export function Desafio({
         }}
         disabled={done}
         style={{
-          background: done ? C.seaDeep : C.brass,
+          background: done ? C.green : C.brass,
           color: C.onDark,
           border: "none",
           borderRadius: 999,

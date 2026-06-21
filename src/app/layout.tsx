@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ClientLayout } from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Do Zero ao Enzo — Guia de IA do Pai 🎁",
-  description: "O jeito que o Enzo usa IA todo dia — traduzido em módulos, exercícios e golden nuggets. Feliz Dia dos Pais!",
+  title: "Guia de IA do Capitão Enisson 🎁",
+  description:
+    "Um curso prático e divertido pra aprender Inteligência Artificial do zero — módulos, desafios e golden nuggets. Feliz Dia dos Pais!",
 };
 
 export default function RootLayout({
@@ -11,7 +13,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className="h-full scroll-smooth">
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased" suppressHydrationWarning>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
     </html>
   );
 }
