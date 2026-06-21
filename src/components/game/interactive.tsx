@@ -518,3 +518,101 @@ export function SwarmViz({ step, onAdvance }: { step: Extract<Step, { kind: "swa
     </div>
   );
 }
+
+// ════════════════ TRANSFORMA (conserta o pedido — toggles + rewrite ao vivo) ════════════════
+export function Transforma({ step, onResponder, locked }: { step: Extract<Step, { kind: "transforma" }>; onResponder: RespFn; locked: boolean }) {
+  const [on, setOn] = useState<Set<number>>(new Set());
+  const [enviado, setEnviado] = useState(false);
+  const total = step.ingredientes.length;
+  const todos = on.size === total;
+  const { shown, done } = useTyped(step.respostaForte, enviado);
+
+  useEffect(() => {
+    if (enviado && done) {
+      const t = setTimeout(() => onResponder(true, step.sucesso), 350);
+      return () => clearTimeout(t);
+    }
+  }, [enviado, done, onResponder, step.sucesso]);
+
+  const toggle = (i: number) => {
+    if (enviado || locked) return;
+    setOn((s) => {
+      const n = new Set(s);
+      if (n.has(i)) n.delete(i);
+      else n.add(i);
+      return n;
+    });
+  };
+
+  const promptAtual =
+    step.base + step.ingredientes.filter((_, i) => on.has(i)).map((g) => " " + g.texto).join("");
+
+  return (
+    <div>
+      <h3 style={tituloStyle}>Conserta o pedido</h3>
+      <p style={subStyle}>{step.instrucao}</p>
+
+      {/* pedido ao vivo */}
+      <div style={{ background: "#08090B", border: `1px solid ${C.line}`, borderRadius: 14, padding: "14px 15px", marginBottom: 12 }}>
+        <span className="label-caps" style={{ color: C.seaDeep }}>Seu pedido agora</span>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 15, color: C.text, lineHeight: 1.5, margin: "8px 0 0" }}>
+          {step.base}
+          {step.ingredientes.map((g, i) =>
+            on.has(i) ? (
+              <motion.span key={i} initial={{ background: "rgba(74,222,128,0.4)" }} animate={{ background: "rgba(74,222,128,0.14)" }} transition={{ duration: 0.8 }} style={{ color: C.green, borderRadius: 4, padding: "1px 3px" }}>
+                {" "}{g.texto}
+              </motion.span>
+            ) : null
+          )}
+        </p>
+      </div>
+
+      {/* medidor de qualidade */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+        <span className="label-caps" style={{ color: C.textMuted }}>Força</span>
+        <div style={{ flex: 1, display: "flex", gap: 4 }}>
+          {step.ingredientes.map((_, i) => (
+            <div key={i} style={{ flex: 1, height: 8, borderRadius: 999, background: i < on.size ? C.green : "rgba(255,255,255,0.08)", transition: "background 250ms" }} />
+          ))}
+        </div>
+      </div>
+
+      {/* ingredientes pra ligar */}
+      {!enviado && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 }}>
+          {step.ingredientes.map((g, i) => (
+            <button key={i} onClick={() => toggle(i)} className="clay" style={{
+              background: on.has(i) ? C.green : C.card2,
+              color: on.has(i) ? "#0A0B0D" : C.text,
+              padding: "9px 13px", fontSize: 13.5, fontWeight: 800,
+              border: `1px solid ${on.has(i) ? C.green : C.line}`,
+              boxShadow: "0 3px 0 0 rgba(0,0,0,0.4)",
+            }}>
+              {on.has(i) ? "✓ " : "+ "}{g.etiqueta}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* antes (preview fraco) / depois (resposta forte) */}
+      {!enviado ? (
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: 13, color: C.textMuted, fontStyle: "italic", marginBottom: 16, lineHeight: 1.5 }}>
+          🦜 Com o pedido fraco, viria algo sem graça: “{step.respostaFraca}”
+        </p>
+      ) : (
+        <div style={{ marginBottom: 8 }}>
+          <Telinha>
+            <Bolha from="eu">{promptAtual}</Bolha>
+            <Bolha from="ia">{shown}{!done && <span style={{ opacity: 0.5 }}>▍</span>}</Bolha>
+          </Telinha>
+        </div>
+      )}
+
+      {!enviado && (
+        <ChunkyButton full cor={todos ? C.brass : C.card2} textColor={todos ? "#0A0B0D" : C.textMuted} disabled={locked || !todos} onClick={() => setEnviado(true)}>
+          {todos ? "📨 Enviar o pedido forte" : `Liga os ${total} ingredientes pra enviar`}
+        </ChunkyButton>
+      )}
+    </div>
+  );
+}

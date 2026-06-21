@@ -43,6 +43,21 @@ export const metaprompt: Step[] = [
     sucesso: "Viu? Você falou torto, ela devolveu redondo. Esse é o truque.",
   },
   {
+    kind: "transforma",
+    instrucao: "Liga os ingredientes e veja o pedido fraco virar forte ao vivo. Depois, envie.",
+    base: "Escreve um post pro Instagram do barco.",
+    ingredientes: [
+      { etiqueta: "+ Papel", texto: "Você é meu social media." },
+      { etiqueta: "+ Detalhe", texto: "Sobre o passeio ao pôr do sol de sábado." },
+      { etiqueta: "+ Tom", texto: "Animado e caloroso, com 1 emoji." },
+      { etiqueta: "+ Formato", texto: "Curto, com uma chamada pra reservar." },
+    ],
+    respostaFraca: "Venha passear de barco. Reserve já.",
+    respostaForte:
+      "🌅 Sábado tem magia no mar: passeio ao pôr do sol, brisa leve e o céu pegando fogo de laranja. Poucas vagas — chama no direct e garanta a sua antes que zarpe! ⛵",
+    sucesso: "Sentiu? Cada ingrediente deixou o pedido mais forte — e a resposta floresceu.",
+  },
+  {
     kind: "escolha",
     contexto: "Você quer avisar os hóspedes do passeio de amanhã, mas não sabe escrever o pedido.",
     pergunta: "Qual é o jeito esperto de fazer?",

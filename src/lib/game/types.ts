@@ -105,6 +105,17 @@ export type Step =
       tarefas: string[]; // cada barco faz uma
       sucesso: string;
     }
+  // TRANSFORMA — "conserta o pedido": liga ingredientes e vê o pedido fraco virar forte ao vivo,
+  // com a resposta da IA mudando. Mecânica nova: toggles aditivos + medidor + antes/depois.
+  | {
+      kind: "transforma";
+      instrucao: string;
+      base: string; // pedido fraco inicial
+      ingredientes: { etiqueta: string; texto: string }[]; // ligar pra melhorar
+      respostaFraca: string; // resposta ao pedido fraco
+      respostaForte: string; // resposta ao pedido completo
+      sucesso: string;
+    }
   // Recompensa / fim de mini-sessão (cartão de baú)
   | {
       kind: "premio";
