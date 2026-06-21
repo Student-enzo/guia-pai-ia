@@ -3,10 +3,11 @@
  * Troque o nome aqui num lugar só e ele muda no site inteiro.
  */
 
-// 👤 TROCAR: nome do pai e como ele é chamado nos exercícios.
+// 👤 Nome do pai e como ele é chamado nos exercícios.
 export const PAI = {
-  nome: "[NOME]", // ex: "Carlos"
-  comoChamar: "Capitão", // ex: "Seu Carlos", "Pai", "Capitão"
+  nome: "Enisson Godoy",
+  primeiroNome: "Enisson",
+  comoChamar: "Capitão", // apelido carinhoso, no tema náutico
   negocio: "Atlantic Yacht Charter", // o negócio de yacht charter dele
   negocioCurto: "charter de barcos",
 };

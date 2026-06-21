@@ -7,13 +7,14 @@ import { ModIntro } from "@/components/ModIntro";
 import { ModPrompting } from "@/components/ModPrompting";
 import { ModMetaprompt } from "@/components/ModMetaprompt";
 import { ModHarness } from "@/components/ModHarness";
+import { BonusConselho } from "@/components/BonusConselho";
 import { ModSkills } from "@/components/ModSkills";
 import { ModMcps } from "@/components/ModMcps";
 import { ModResearch } from "@/components/ModResearch";
 import { ModBastidores } from "@/components/ModBastidores";
 import { ModDiploma } from "@/components/ModDiploma";
 
-const TOTAL_DESAFIOS = 12; // total de desafios no guia inteiro
+const TOTAL_DESAFIOS = 13; // 12 módulos + 1 desafio bônus (Conselho)
 
 export default function Page() {
   return (
@@ -24,6 +25,7 @@ export default function Page() {
       <ModPrompting />
       <ModMetaprompt />
       <ModHarness />
+      <BonusConselho />
       <ModSkills />
       <ModMcps />
       <ModResearch />
@@ -106,7 +108,7 @@ function Hero() {
           IA do Zero
           <br />
           <span style={{ fontFamily: "'Pinyon Script', cursive", fontWeight: 400 }}>
-            pra Você, {PAI.comoChamar}
+            pra Você, Capitão {PAI.primeiroNome}
           </span>
         </h1>
         <p
