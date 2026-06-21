@@ -10,6 +10,37 @@ export const intro: Step[] = [
       "Vou ser seu co-piloto nessa travessia, capitão. Relaxa: você não precisa entender de tecnologia. Só precisa aprender a conversar — e isso você faz a vida inteira.",
   },
   {
+    kind: "simulador",
+    titulo: "Olha a IA trabalhando 👀",
+    instrucao:
+      "Um hóspede mandou mensagem sobre o passeio de amanhã. Toque nos dois jeitos de pedir e veja a IA responder. Sinta a diferença.",
+    pedidos: [
+      {
+        rotulo: "responde esse cliente aí",
+        etiqueta: "pedido fraco",
+        bom: false,
+        resposta:
+          "Claro! Aqui está uma resposta:\n\n“Olá, obrigado pela sua mensagem. Entraremos em contato em breve.”\n\n(genérico, sem alma — porque eu tive que adivinhar tudo 🤷)",
+      },
+      {
+        rotulo:
+          "Responde o hóspede confirmando o passeio amanhã às 9h, tom caloroso e em inglês",
+        etiqueta: "pedido forte",
+        bom: true,
+        resposta:
+          "Good morning, James! 🌅 All set for tomorrow — we’ll welcome you aboard at 9 AM sharp. Calm seas, sunshine, and a captain who knows every cove. Bring a hat and your sense of adventure! Any questions before we set sail?",
+      },
+    ],
+    sucesso: "Mesma IA, pedidos diferentes — resultados de outro mundo.",
+  },
+  {
+    kind: "fala",
+    mascote: "pensando",
+    titulo: "O segredo que quase ninguém conta:",
+    texto:
+      "Viu? Não é a ferramenta, é o JEITO de pedir. Quem ganha com IA não é quem aperta o botão mágico — é quem aprende a falar com ela. E é isso que vou te ensinar, passo a passo.",
+  },
+  {
     kind: "mito",
     afirmacao: "Pra usar Inteligência Artificial, eu preciso saber programar.",
     ehVerdade: false,
@@ -17,13 +48,6 @@ export const intro: Step[] = [
       "Isso! Você conversa com a IA em português normal, igual mandar um zap. Zero código.",
     comentarioErrado:
       "Na verdade é MITO! Você fala em português comum. Se sabe mandar mensagem no WhatsApp, já sabe o essencial.",
-  },
-  {
-    kind: "fala",
-    mascote: "pensando",
-    titulo: "O segredo que quase ninguém conta:",
-    texto:
-      "Não é a ferramenta, é o SISTEMA. Quem ganha com IA não é quem escreve o pedido mais bonito — é quem monta um jeito repetível de trabalhar. É isso que vou te ensinar.",
   },
   {
     kind: "escolha",
@@ -48,25 +72,6 @@ export const intro: Step[] = [
     ],
   },
   {
-    kind: "escolha",
-    contexto: "Claude, ChatGPT e Gemini — qual a real?",
-    pergunta: "Qual frase está certa sobre as diferentes IAs?",
-    opcoes: [
-      {
-        texto: "São barcos diferentes pro mesmo mar — cada uma é boa numa coisa",
-        certa: true,
-        comentario:
-          "Isso! Claude escreve e raciocina lindo, ChatGPT é versátil e faz imagem, Gemini é rápido com textão. E o que você aprende serve em TODAS.",
-      },
-      {
-        texto: "Só uma presta, o resto é ruim",
-        certa: false,
-        comentario:
-          "Nada disso! Nenhuma é ‘ruim’ — cada uma brilha numa tarefa. A habilidade que você ganha aqui viaja entre todas.",
-      },
-    ],
-  },
-  {
     kind: "mito",
     afirmacao: "No mundo da IA, um dia de novidade equivale a quase um ano de antigamente.",
     ehVerdade: true,
@@ -80,6 +85,6 @@ export const intro: Step[] = [
     emoji: "🧭",
     titulo: "Você ganhou a Bússola!",
     texto:
-      "Primeira lição no bolso: não é a ferramenta, é o sistema. Agora bora aprender a falar com a IA de verdade.",
+      "Primeira lição no bolso: não é a ferramenta, é o jeito de pedir. Agora bora aprender a falar com a IA de verdade.",
   },
 ];

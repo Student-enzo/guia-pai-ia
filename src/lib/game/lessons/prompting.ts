@@ -12,59 +12,33 @@ export const prompting: Step[] = [
   {
     kind: "fala",
     mascote: "pensando",
-    titulo: "A receita dos 5 ingredientes 🧾",
+    titulo: "A receita de 4 blocos 🧾",
     texto:
-      "Um bom pedido tem 5 temperos: CONTEXTO (a situação), OBJETIVO (o que você quer no fim), TOM (como deve soar), FORMATO/TAMANHO (email curto? lista?) e O QUE EVITAR (preço, promessa, gíria). Decorou? Nunca mais recebe resposta sem graça.",
+      "Todo pedido bom tem 4 blocos, nesta ordem: PAPEL (quem a IA deve ser), TAREFA (o que fazer), DETALHES (a situação) e FORMATO (como deve sair). Vou te deixar montar um agora — é mais fácil do que parece.",
+  },
+  {
+    kind: "construir",
+    instrucao:
+      "Toque nos blocos na ordem — Papel, Tarefa, Detalhes, Formato — e depois envie. Veja a IA responder.",
+    blocos: [
+      { etiqueta: "PAPEL", texto: "Você é meu assistente do charter", cor: "#B0894F" },
+      { etiqueta: "TAREFA", texto: "escreva um email", cor: "#6FA8AD" },
+      { etiqueta: "DETALHES", texto: "confirmando o passeio de domingo às 9h", cor: "#4A9B7F" },
+      { etiqueta: "FORMATO", texto: "curto e caloroso, sem inventar preço", cor: "#8A6FB0" },
+    ],
+    resposta:
+      "Olá! Passando pra confirmar com alegria o seu passeio neste domingo, às 9h da manhã. 🌊 Estaremos prontos pra te receber a bordo com mar calmo e muito sol. Qualquer dúvida até lá, é só chamar. Até domingo!",
+    sucesso:
+      "Perfeito, capitão! Papel + Tarefa + Detalhes + Formato. Esse email saiu pronto pra mandar. 🛥️",
   },
   {
     kind: "mito",
     afirmacao: "Se eu pedir só 'escreve um email', a IA adivinha o resto e acerta.",
     ehVerdade: false,
     comentarioCerto:
-      "Isso! Pedido curto demais, a IA chuta. Capriche nos 5 ingredientes e ela devolve quase pronto.",
+      "Isso! Pedido curto demais, a IA chuta. Capriche nos 4 blocos e ela devolve quase pronto.",
     comentarioErrado:
-      "É MITO, capitão! A IA não advinha — ela chuta. 'Escreve um email' sobre o quê? Pra quem? Sem contexto, vem genérico. Diga os detalhes e ela acerta.",
-  },
-  {
-    kind: "escolha",
-    contexto: "Um cliente fechou um passeio de domingo às 9h e você quer confirmar por email.",
-    pergunta: "Qual pedido vai render o melhor email?",
-    opcoes: [
-      {
-        texto:
-          "Escreve um email simpático e curto confirmando a reserva do passeio de domingo às 9h, sem inventar preço.",
-        certa: true,
-        comentario:
-          "Mandou bem! Tem contexto, objetivo, tom, tamanho e o que evitar. A IA devolve quase pronto pra mandar.",
-      },
-      {
-        texto: "Escreve um email.",
-        certa: false,
-        comentario:
-          "Curto demais! A IA não sabe sobre o quê nem pra quem. Vai vir um email genérico que você teria que refazer três vezes. ⚓",
-      },
-      {
-        texto: "Faz aí um negócio pro cliente.",
-        certa: false,
-        comentario:
-          "Vago demais, capitão! 'Um negócio' pode ser qualquer coisa. Diga: email, confirmação, domingo 9h. Aí ela acerta.",
-      },
-    ],
-  },
-  {
-    kind: "monte",
-    instrucao: "Toque nas peças na ordem certa pra montar um pedido caprichado:",
-    pecas: [
-      "Escreva um email",
-      "curto e caloroso",
-      "confirmando a reserva",
-      "do passeio de barco",
-      "de amanhã",
-    ],
-    ordem: [0, 1, 2, 3, 4],
-    dica: "Comece pela ação (o que fazer), depois o tom, e termine com o detalhe do passeio.",
-    sucesso:
-      "Perfeito, capitão! Ação + tom + detalhe. Esse pedido a IA confirma sem você nem revisar. 🛥️",
+      "É MITO, capitão! A IA não adivinha — ela chuta. 'Escreve um email' sobre o quê? Pra quem? Sem contexto, vem genérico.",
   },
   {
     kind: "ache",
@@ -73,7 +47,7 @@ export const prompting: Step[] = [
       {
         texto: "responde o cliente",
         certa: false,
-        comentario: "Responde o quê? Como? A IA fica no escuro. Faltam os ingredientes.",
+        comentario: "Responde o quê? Como? A IA fica no escuro. Faltam os blocos.",
       },
       {
         texto:
@@ -116,10 +90,17 @@ export const prompting: Step[] = [
     ],
   },
   {
+    kind: "tesouro",
+    titulo: "Tesouro: seu modelo de resposta",
+    texto: "Cola isso em qualquer IA, troca o que está entre [colchetes], e manda ver.",
+    prompt:
+      "Você é meu assistente do meu negócio de charter de barcos.\nResponda este hóspede: [cole a mensagem dele].\nObjetivo: [confirmar / remarcar / agradecer].\nTom: caloroso e profissional. Formato: mensagem curta de WhatsApp.\nNão invente preço nem prometa o que eu não disse.",
+  },
+  {
     kind: "premio",
     emoji: "🧾",
     titulo: "Você ganhou a Receita de Ouro!",
     texto:
-      "Agora você manda os 5 ingredientes, pede a verdade e olha os dois lados. Pedido caprichado, resposta caprichada. Já manda melhor que muita gente, capitão!",
+      "Agora você monta os 4 blocos, pede a verdade e olha os dois lados. Pedido caprichado, resposta caprichada. Já manda melhor que muita gente, capitão!",
   },
 ];

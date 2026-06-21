@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { C } from "@/lib/config";
 import { Step } from "@/lib/game/types";
 import { ChunkyButton, Mascote } from "./atoms";
+import { Simulador, Dial, Construir, Caca, SwarmViz } from "./interactive";
 import { CopyButton } from "@/lib/ui";
 
 type RespFn = (ok: boolean, comentario: string) => void;
@@ -37,6 +38,16 @@ export function StepView({
       return <Monte step={step} onResponder={onResponder} locked={locked} />;
     case "ligue":
       return <Ligue step={step} onResponder={onResponder} />;
+    case "simulador":
+      return <Simulador step={step} onAdvance={onAdvance} />;
+    case "dial":
+      return <Dial step={step} onAdvance={onAdvance} />;
+    case "construir":
+      return <Construir step={step} onResponder={onResponder} locked={locked} />;
+    case "caca":
+      return <Caca step={step} onResponder={onResponder} locked={locked} />;
+    case "swarm":
+      return <SwarmViz step={step} onAdvance={onAdvance} />;
   }
 }
 

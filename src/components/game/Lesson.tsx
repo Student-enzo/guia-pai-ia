@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { C } from "@/lib/config";
 import { useProgress } from "@/lib/progress";
-import { Step, passosJogaveis } from "@/lib/game/types";
+import { Step, passosJogaveis, ehJogavel } from "@/lib/game/types";
 import { dispararConfete } from "@/lib/fun";
 import { ChunkyButton, Hearts, ProgressSegments, Mascote } from "./atoms";
 import { StepView } from "./steps";
@@ -59,7 +59,7 @@ export function Lesson({
   };
 
   const avancar = () => {
-    const eraJogavel = step.kind !== "fala" && step.kind !== "premio";
+    const eraJogavel = ehJogavel(step.kind);
     setFb(null);
     if (eraJogavel) setResolvidos((r) => r + 1);
     if (idx >= steps.length - 1) {

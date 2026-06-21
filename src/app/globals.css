@@ -168,6 +168,38 @@ body {
 }
 .heart-break { animation: heart-break 500ms ease; }
 
+/* Dial de esforço (slider gordinho estilo jogo) */
+.dial-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #90C4CF, #B0894F);
+  outline: none;
+  cursor: pointer;
+}
+.dial-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #B0894F;
+  box-shadow: 0 4px 0 0 rgba(0,0,0,0.18);
+  cursor: grab;
+}
+.dial-range::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.08); }
+.dial-range::-moz-range-thumb {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #B0894F;
+  box-shadow: 0 4px 0 0 rgba(0,0,0,0.18);
+  cursor: grab;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .ticker-anim, .pulse-dot, .bob { animation: none; }
